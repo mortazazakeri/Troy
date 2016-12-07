@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
+
 -->
 <html>
     <head>
@@ -13,15 +11,19 @@ and open the template in the editor.
     <body>
         <div>
             <h1>User Login</h1>
-            <form action="mapsaver.jsp" action="get">
+            <form action="./loginprocess.jsp" method="post">
                 <fieldset>
                     <legend>user information:</legend>
-                     Username:<br>
+                    Username:<br>
                     <input type="text" name="username" value=""><br>
-                     Password:<br>
-                    <input type="text" name="password" value=""><br><br>
-                    <input type="submit" value="create">
+                    Password:<br>
+                    <input type="password" name="password" value=""><br><br>
+                    <input type="submit" value="LogIn">
                 </fieldset>
-            </form> </div>
+            </form> 
+        </div>
+        <a href="../index.jsp"> Back to Home </a> 
+         | 
+        <a href="./register.jsp"> Register </a>
     </body>
 </html>
