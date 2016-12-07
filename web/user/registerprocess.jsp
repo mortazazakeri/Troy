@@ -1,36 +1,37 @@
 <%-- 
-    Document   : loginprocess
-    Created on : Dec 7, 2016, 1:39:25 PM
+    Document   : registerprocess
+    Created on : Dec 7, 2016, 10:24:30 PM
     Author     : Morteza
 --%>
 
-<%@page import="user.Login"%>
+<%@page import="user.User"%>
+<%@page import="user.UserRepository"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>TaxiFinder - Login Process</title>
+        <title>TaxiFinder - Register Process</title>
     </head>
-    <body>
-
+    <body>        
         <%
-
+            String firstname = request.getParameter("firstname");
+            String lastname = request.getParameter("lastname");
             String username = request.getParameter("username");
             String password = request.getParameter("password");
             String role = request.getParameter("role");
+            User u = new user.User(firstname, lastname, username, password);
 
-            user.Login logginer = new Login();
-            user.User loggedUser = logginer.doLogin(username, password,role);
+            boolean status = UserRepository.getUserRepositoryInstance().insertUser(u, role);
 
-            if (loggedUser != null)
+            if (status)
             {
-                out.println("You are successfully logged in!");
-                session.setAttribute("session", "TRUE");
+                out.println("You are successfully Register and logged in!");
+                 session.setAttribute("session", "TRUE");
                 session.setAttribute("status", "logged");
                
-                session.setAttribute("firstname", loggedUser.getFirstname());
-                session.setAttribute("lastname", loggedUser.getLastname());
+                session.setAttribute("firstname", firstname);
+                session.setAttribute("lastname", lastname);
                 session.setAttribute("username", username);
                 session.setAttribute("password", password);
                 session.setAttribute("role", role);
@@ -41,17 +42,17 @@
                 response.setHeader("Location", site);
             } else
             {
-                out.print(" Sorry, username or password is not correct! ");
-                out.print("<a href=\"./login.html\"> Try again  </a>");
+                out.print(" Sorry, invalid input! ");
+                out.print("<a href=\"./register.jsp\"> Try again </a>");
                 out.print(" or ");
-                out.print("<a href=\"./register.jsp\"> Register </a>");
+                out.print("<a href=\"./login.html\"> Login </a>");
         %>  
         <%--jsp:include page="../index.html"></jsp:include> --%>
         <%
             }
 
         %>  
-        
+
 
     </body>
 </html>

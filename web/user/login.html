@@ -10,15 +10,22 @@
     </head>
     <body>
         <div>
-            <h1>User Login</h1>
+            <h2>User Login</h2>
             <form action="./loginprocess.jsp" method="post">
                 <fieldset>
-                    <legend>user information:</legend>
+                    <legend>User information:</legend>
                     Username:<br>
                     <input type="text" name="username" value=""><br>
                     Password:<br>
-                    <input type="password" name="password" value=""><br><br>
-                    <input type="submit" value="LogIn">
+                    <input type="password" name="password" value=""><br>
+                    Role:<br>
+                    <select name="role">
+                        <option value="driver">Driver</option>
+                        <option value="passenger">Passenger</option>
+                        <option value="manager">Manager</option>
+                    </select>
+                    <br>
+                    <input type="submit" value="Login">
                 </fieldset>
             </form> 
         </div>

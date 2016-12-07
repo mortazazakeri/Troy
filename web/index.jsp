@@ -61,11 +61,18 @@
             {
                 if (session.getAttribute("status") != null)
                 {
+
                     loginOrLogoutName = new String("Logout");
                     loginOrLogoutLink = new String("./user/logout.jsp");
 
                     registerOrProfileName = new String("Hello " + session.getAttribute("username") + " :: Profile");
-                    registerOrProfileLink = new String("./user/profile.jsp");
+                    if (session.getAttribute("role").equals("manager"))
+                    {
+                        registerOrProfileLink = new String("./user/profilemanager.jsp");
+                    } else
+                    {
+                        registerOrProfileLink = new String("./user/profile.jsp");
+                    }
                 }
             }
 
