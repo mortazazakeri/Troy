@@ -1,18 +1,54 @@
 <!DOCTYPE html>
 <!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
+
 -->
 <html>
     <head>
-        <title>Morteza </title>
+        <title>TaxiFinder - Home </title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript" src="../src/java/js/dracula.min.js"></script>
+
     </head>
     <body>
-        <div>TODO write content</div>
-        <h1> Hello Mohsen </h1>
-        <h1> Hello AMir</h1>
+
+
+        <script type="text/javascript">
+            //var x = 23;
+            //var y = 32;
+            // var z = x + y;
+            //document.write(z);
+            var Dracula = require('../src/java/jsdracula.min');
+
+            var Graph = Dracula.Graph;
+            var Renderer = Dracula.Renderer.Raphael;
+            var Layout = Dracula.Layout.Spring;
+            var graph = new Graph();
+            graph.addEdge('Banana', 'Apple');
+            graph.addEdge('Apple', 'Kiwi');
+            graph.addEdge('Apple', 'Dragonfruit');
+            graph.addEdge('Dragonfruit', 'Banana');
+            graph.addEdge('Kiwi', 'Banana');
+
+            var layout = new Layout(graph);
+            var renderer = new Renderer('#paper', graph, 400, 300);
+            renderer.draw();
+
+        </script>
+
+        <h1> Welcome to TaxiFinder Web App (v0.1.0)</h1>
+        <br>
+        <h2>Main Menu:</h2> 
+        <a href="./mapmanager.jsp" ><b>Login</b></a>
+        <div style="border: 1px; margin: 10px;"> 
+            <a href="./mapmanager.jsp" ><b>Map Manager</b></a>
+            <br>
+            <a href="" ><b>Register as User</b></a>
+            <br>
+            <a href="" ><b>Register as Driver</b></a>
+            <br>
+            <a href="" ><b>Trip Request</b></a>
+            <br>
+        </div>
     </body>
 </html>
