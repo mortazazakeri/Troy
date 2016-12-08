@@ -73,22 +73,83 @@ public class UserRepository
             return false;
         } else
         {
-            if (role.equals("driver"))
+            switch (role)
             {
-                Driver d = new Driver(u, role);
-                allDrivers.add(d);
-            } else
-            {
-                Passenger p = new Passenger(u, role);
-                allPassengers.add(p);
+                case "driver":
+                    Driver d = new Driver(u, role);
+                    allDrivers.add(d);
+                    break;
+                case "passenger":
+                    Passenger p = new Passenger(u, role);
+                    allPassengers.add(p);
+                    break;
+                case "manager":
+                    Manager m = new Manager(u, role);
+                    allManagers.add(m);
+                    break;
             }
             return true;
         }
     }
 
-    public User getUser(String role)
+    public User getUser(String username, String password, String role)
     {
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+
+        switch (role)
+        {
+            case "manager":
+                for (User u
+                        : UserRepository.getUserRepositoryInstance().allManagers)
+                {
+                    if (u.getUsername().equals(user.getUsername())
+                            && u.getPassword().equals(user.getPassword()))
+                    {
+                        return u;
+                    }
+                }
+                break;
+            case "driver":
+                for (User u
+                        : UserRepository.getUserRepositoryInstance().allDrivers)
+                {
+                    if (u.getUsername().equals(user.getUsername())
+                            && u.getPassword().equals(user.getPassword()))
+                    {
+                        return u;
+                    }
+                }
+                break;
+            default:
+                for (User u
+                        : UserRepository.getUserRepositoryInstance().allPassengers)
+                {
+                    if (u.getUsername().equals(user.getUsername())
+                            && u.getPassword().equals(user.getPassword()))
+                    {
+                        return u;
+                    }
+                }
+                break;
+        }
         return null;
+    }
+
+    public Driver updateDriver(Driver old)
+    {
+        return old;
+    }
+
+    public Passenger updateDriver(Passenger old)
+    {
+        return old;
+    }
+
+    public Manager updateManager(Manager old)
+    {
+        return old;
     }
 
 }
