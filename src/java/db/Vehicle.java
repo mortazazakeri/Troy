@@ -1,19 +1,19 @@
 package db;
 
-public class Vehicle extends ODBClass
+public class Vehicle
 {
-	private String color;
+	private final String color;
 
-	private int id;
+	private final int idr;
 
-	private int pelak;
+	private final int pelak;
 
-	private int type;
+	private final int type;
 
-	public Vehicle(String color, int id, int pelak, int type)
+	public Vehicle(String color, int idr, int pelak, int type)
 	{
 		this.color = color;
-		this.id = id;
+		this.idr = idr;
 		this.pelak = pelak;
 		this.type = type;
 	}
@@ -23,9 +23,9 @@ public class Vehicle extends ODBClass
 		return color;
 	}
 
-	public int getId()
+	public int getIdr()
 	{
-		return id;
+		return idr;
 	}
 
 	public int getPelak()

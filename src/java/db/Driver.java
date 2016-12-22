@@ -1,16 +1,14 @@
 package db;
 
-public class Driver extends ODBClass
+public class Driver extends Person
 {
-	private int userID;
+	private final int licenseNumber;
 
-	private int licenseNumber;
+	private final int vehicleID;
 
-	private int vehicleID;
-
-	public Driver(int userID, int licenseNumber, int vehicleID)
+	public Driver(String name, String userName, String password, int licenseNumber, int vehicleID)
 	{
-		this.userID = userID;
+                super(name, userName, password);
 		this.licenseNumber = licenseNumber;
 		this.vehicleID = vehicleID;
 	}
@@ -19,12 +17,7 @@ public class Driver extends ODBClass
 	{
 		return licenseNumber;
 	}
-
-	public int getUser()
-	{
-		return userID;
-	}
-
+        
 	public int getVehicle()
 	{
 		return vehicleID;

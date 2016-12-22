@@ -2,22 +2,22 @@ package db;
 
 import java.util.List;
 
-public class Node extends ODBClass
+public class Node
 {
-	private int id;
+	private final int idr;
 
-	private String name;
+	private final String name;
 
-	private int latitude;
+	private final int latitude;
 
-	private int langtitude;
+	private final int langtitude;
 
-	private List<Integer> driversIDs;
+	private final List<Integer> driversIDs;
 
-	public Node(int id, String name, int latitude, int langtitude,
+	public Node(int idr, String name, int latitude, int langtitude,
 			List<Integer> driversIDs)
 	{
-		this.id = id;
+		this.idr = idr;
 		this.driversIDs = driversIDs;
 		this.langtitude = langtitude;
 		this.latitude = latitude;
@@ -29,9 +29,9 @@ public class Node extends ODBClass
 		return driversIDs;
 	}
 
-	public int getId()
+	public int getIdr()
 	{
-		return id;
+		return idr;
 	}
 
 	public int getLangtitude()

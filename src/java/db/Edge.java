@@ -1,23 +1,23 @@
 package db;
 
-public class Edge extends ODBClass
+public class Edge
 {
-	private int id;
+	private final int idr;
 
-	private float distance;
+	private final float distance;
 
-	private int traffic;
+	private final int traffic;
 
-	public Edge(int id, float distance, int traffic)
+	public Edge(int idr, float distance, int traffic)
 	{
-		this.id = id;
+		this.idr = idr;
 		this.traffic = traffic;
 		this.distance = distance;
 	}
 
-	public int getId()
+	public int getIdr()
 	{
-		return id;
+		return idr;
 	}
 
 	public float getDistance()

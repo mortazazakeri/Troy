@@ -41,14 +41,12 @@
                 <h3>View and Edit Personal Information:</h3>
                 <fieldset>
                     <legend>User information:</legend>
-                    First Name:<br>
-                    <input type="text" name="firstname" value="<%out.print(session.getAttribute("firstname"));%>"><br>
-                    Last Name:<br>
-                    <input type="text" name="lastname" value="<%out.print(session.getAttribute("lastname"));%>"><br>                   
+                    Name:<br>
+                    <input type="text" name="firstname" value="<%out.print(session.getAttribute("name"));%>"> <br>                   
                     Username:<br>
-                    <input type="text" name="username" value="<%out.print(session.getAttribute("username"));%>" readonly><br>
+                    <input type="text" name="username" value="<%out.print(session.getAttribute("username"));%>" readonly > <br>
                     Password:<br>
-                    <input type="password" name="password" value="<%out.print(session.getAttribute("password"));%>"><br>
+                    <input type="password" name="password" value="<%out.print(session.getAttribute("password"));%>"> <br>
                     Role:<br>
                     <select name="role">
                         <option value="manager">Manager</option>                      
@@ -56,34 +54,34 @@
                     <br>
                     <input type="submit" value="Update">
                 </fieldset>
-                    <p><% 
+                <p><%
                     if (request.getParameter("action") != null)
                     {
                         out.print("Your profile update!");
-                    }%></p>
+                        }%></p>
             </form> 
 
             <h3>List of Registered Drivers:</h3>
             <table >
                 <tr>
-                    <th>Id</th> <th>First Name</th> <th>Last Name</th> <th>Username</th>
+                    <th>Id</th> <th>Name</th> <th>Username</th>
                     <th>Edit</th> <th>Delete</th>
                 </tr>    
 
                 <%
                     int i = 1;
-                    for (user.Driver d
-                            : user.UserRepository.getUserRepositoryInstance().allDrivers)
+                    for (db.Driver d
+                            : db.ODBClass.getInstance().readAllDrivers())
                     {
                         out.print("<tr>");
                         out.print("<td>" + i + "</td>");
-                        out.print("<td>" + d.getFirstname() + "</td>");
-                        out.print("<td>" + d.getLastname() + "</td>");
-                        out.print("<td>" + d.getUsername() + "</td>");
+                        out.print("<td>" + d.getName() + "</td>");
+                        //out.print("<td>" + d.getLastname() + "</td>");
+                        out.print("<td>" + d.getUserName() + "</td>");
                         out.print("<td>" + "<a href=\".\\driveredit.jsp?username="
-                                + d.getUsername() + "&action=edit" + "\">" + "Edit" + "</a>" + "</td>");
+                                + d.getUserName() + "&action=edit" + "\">" + "Edit" + "</a>" + "</td>");
                         out.print("<td>" + "<a href=\".\\driveredit.jsp?username="
-                                + d.getUsername() + "&action=delete" + "\">" + "Delete" + "</a>" + "</td>");
+                                + d.getUserName() + "&action=delete" + "\">" + "Delete" + "</a>" + "</td>");
                         out.print("</tr>");
                         i++;
                     }
@@ -93,24 +91,23 @@
             <h3>List of Registered Passengers:</h3>
             <table >
                 <tr>
-                    <th> Id</th> <th>First Name</th> <th>Last Name</th> <th>Username</th>
+                    <th> Id</th> <th>Name</th> <th>Username</th>
                     <th>Edit</th> <th>Delete</th>
                 </tr>    
 
-                <%    
+                <%
                     int j = 1;
-                    for (user.Passenger p
-                            : user.UserRepository.getUserRepositoryInstance().allPassengers)
+                    for (db.User p : db.ODBClass.getInstance().readAllUsers())
                     {
                         out.print("<tr>");
                         out.print("<td>" + j + "</td>");
-                        out.print("<td>" + p.getFirstname() + "</td>");
-                        out.print("<td>" + p.getLastname() + "</td>");
-                        out.print("<td>" + p.getUsername() + "</td>");
+                        out.print("<td>" + p.getName() + "</td>");
+                        //out.print("<td>" + p.getLastname() + "</td>");
+                        out.print("<td>" + p.getUserName() + "</td>");
                         out.print("<td>" + "<a href=\".\\passengeredit.jsp?username="
-                                + p.getUsername() + "&action=edit" + "\">" + "Edit" + "</a>" + "</td>");
+                                + p.getUserName() + "&action=edit" + "\">" + "Edit" + "</a>" + "</td>");
                         out.print("<td>" + "<a href=\".\\passengeredit.jsp?username="
-                                + p.getUsername() + "&action=delete" + "\">" + "Delete" + "</a>" + "</td>");
+                                + p.getUserName() + "&action=delete" + "\">" + "Delete" + "</a>" + "</td>");
                         out.print("</tr>");
                         j++;
                     }

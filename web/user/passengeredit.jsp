@@ -13,5 +13,15 @@
     </head>
     <body>
         <h1>Hello World!</h1>
+        
+        <% 
+            //if()
+            
+            String s1  = request.getParameter("username");
+            String s2 = request.getParameter("action");
+            
+            out.print(s1 + "\n\n and action = " + s2);
+        %>
+        
     </body>
 </html>

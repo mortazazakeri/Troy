@@ -13,14 +13,15 @@
     </head>
     <body>
         <div>
-            <h2>User Register</h2>
+            <h2> User Register </h2>
             <form action="./registerprocess.jsp" method="post">
                 <fieldset>
                     <legend>User information:</legend>
                     First Name:<br>
-                    <input type="text" name="firstname" value=""><br>
-                    Last Name:<br>
-                    <input type="text" name="lastname" value=""><br>                   
+                    <input type="text" name="name" value=""><br>
+                   <!-- Last Name:<br>
+                    <input type="text" name="lastname" value=""><br>      
+                   -->
                     Username:<br>
                     <input type="text" name="username" value=""><br>
                     Password:<br>

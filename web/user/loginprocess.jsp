@@ -4,7 +4,7 @@
     Author     : Morteza
 --%>
 
-<%@page import="user.Login"%>
+<%@page import="db.Responsibility"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -15,26 +15,25 @@
     <body>
 
         <%
-
+           
             String username = request.getParameter("username");
             String password = request.getParameter("password");
             String role = request.getParameter("role");
 
-            user.Login logginer = new Login();
-            user.User loggedUser = logginer.doLogin(username, password,role);
+            db.Responsibility logginer = new Responsibility();
+            db.Person loggedPerson = logginer.doLogin(username, password,role);
 
-            if (loggedUser != null)
+            if (loggedPerson != null)
             {
                 out.println("You are successfully logged in!");
+                
                 session.setAttribute("session", "TRUE");
-                session.setAttribute("status", "logged");
-               
-                session.setAttribute("firstname", loggedUser.getFirstname());
-                session.setAttribute("lastname", loggedUser.getLastname());
+                session.setAttribute("status", "logged");             
+                session.setAttribute("name", loggedPerson.getName());
                 session.setAttribute("username", username);
                 session.setAttribute("password", password);
                 session.setAttribute("role", role);
-                //session.setAttribute("loggedUser", loggedUser);
+                //session.setAttribute("loggedPerson", loggedPerson);
 
                 String site = new String("../index.jsp");
                 response.setStatus(response.SC_MOVED_TEMPORARILY);

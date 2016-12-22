@@ -1,14 +1,14 @@
 package db;
 
-public class Trip extends ODBClass
+public class Trip
 {
-	private String passengerName;
+	private final String passengerName;
 
-	private int driverID;
+	private final int driverID;
 
-	private int startNodeID;
+	private final int startNodeID;
 
-	private int endNodeID;
+	private final int endNodeID;
 
 	public Trip(String passengerName, int driverID, int startNodeID,
 			int endNodeID)

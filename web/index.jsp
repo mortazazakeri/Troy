@@ -79,14 +79,13 @@
         %>
 
         <div style="border: 1px; margin: 10px;"> 
-            <a href=<% out.print(loginOrLogoutLink); %>  <b><%out.print(loginOrLogoutName);%></b> </a>
+            <a href=<% out.print(loginOrLogoutLink); %> > <b> <%out.print(loginOrLogoutName);%> </b> </a>
             <br>
-            <a href=<% out.print(registerOrProfileLink);%> ><b><%out.print(registerOrProfileName);%></b></a>
+            <a href=<% out.print(registerOrProfileLink);%> > <b> <%out.print(registerOrProfileName);%> </b> </a>
             <br>
+            <a href="./mapmanager.jsp" > <b> Map Manager  </b> </a>
             <br>
-            <a href="./mapmanager.jsp" ><b>Map Manager</b></a>
-            <br>
-            <a href="" ><b>Request for Trip</b></a>
+            <a href="" > <b> Request for Trip  </b> </a>
             <br>
         </div>
 
