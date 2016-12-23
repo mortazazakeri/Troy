@@ -11,6 +11,14 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>TaxiFinder - Login Process</title>
+        <%
+            if (session.getAttribute("status") != null)
+            {
+                String site = new String("../index.jsp");
+                response.setStatus(response.SC_MOVED_TEMPORARILY);
+                response.setHeader("Location", site);
+            }
+        %>
     </head>
     <body>
 
@@ -41,7 +49,7 @@
             } else
             {
                 out.print(" Sorry, username or password is not correct! ");
-                out.print("<a href=\"./login.html\"> Try again  </a>");
+                out.print("<a href=\"./login.jsp\"> Try again  </a>");
                 out.print(" or ");
                 out.print("<a href=\"./register.jsp\"> Register </a>");
         %>  

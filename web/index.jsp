@@ -42,36 +42,48 @@
          </script>
         -->
 
-        <h1> Welcome to TaxiFinder Web App (v0.1.0)</h1>
+        <h1> TaxiFinder Web App (v0.2.1)</h1>
+        <%
+            if (session != null && session.getAttribute("status") != null)
+            {
+                out.print("<h2> Weclome " + session.getAttribute("username") + " </h2>");
+            }
+
+        %>
         <h3>Main Menu</h3> 
 
-        <%
-            String loginOrLogoutName;
+        <%            String loginOrLogoutName;
             String registerOrProfileName;
-
+            
             String loginOrLogoutLink;
             String registerOrProfileLink;
             loginOrLogoutName = new String("Login");
-            loginOrLogoutLink = new String("./user/login.html");
-
+            loginOrLogoutLink = new String("./user/login.jsp");
+            
             registerOrProfileName = new String("Register");
             registerOrProfileLink = new String("./user/register.jsp");
-
+            
             if (session != null)
             {
                 if (session.getAttribute("status") != null)
                 {
-
+                    
                     loginOrLogoutName = new String("Logout");
                     loginOrLogoutLink = new String("./user/logout.jsp");
-
-                    registerOrProfileName = new String("Hello " + session.getAttribute("username") + " :: Profile");
-                    if (session.getAttribute("role").equals("manager"))
+                    
+                    registerOrProfileName = new String("Profile");
+                    if (session.getAttribute("role").toString().equals("manager"))
                     {
-                        registerOrProfileLink = new String("./user/profilemanager.jsp");
-                    } else
+                        registerOrProfileLink = new String("./user/profilemanager.jsp?username="
+                                + session.getAttribute("username"));
+                    } else if (session.getAttribute("role").toString().equals("driver"))
                     {
-                        registerOrProfileLink = new String("./user/profile.jsp");
+                        registerOrProfileLink = new String("./user/driveredit.jsp?username="
+                                + session.getAttribute("username"));
+                    } else if (session.getAttribute("role").toString().equals("passenger"))
+                    {
+                        registerOrProfileLink = new String("./user/passengeredit.jsp?username="
+                                + session.getAttribute("username"));
                     }
                 }
             }
@@ -79,14 +91,16 @@
         %>
 
         <div style="border: 1px; margin: 10px;"> 
-            <a href=<% out.print(loginOrLogoutLink); %> > <b> <%out.print(loginOrLogoutName);%> </b> </a>
+
+            <a href = <% out.print(registerOrProfileLink);%> > <b> <%out.print(registerOrProfileName);%> </b> </a>
             <br>
-            <a href=<% out.print(registerOrProfileLink);%> > <b> <%out.print(registerOrProfileName);%> </b> </a>
+            <a href = <% out.print(loginOrLogoutLink);%> > <b> <%out.print(loginOrLogoutName);%> </b> </a>
             <br>
             <a href="./mapmanager.jsp" > <b> Map Manager  </b> </a>
             <br>
             <a href="" > <b> Request for Trip  </b> </a>
             <br>
+
         </div>
 
     </body>

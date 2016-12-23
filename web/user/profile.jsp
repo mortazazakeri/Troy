@@ -12,6 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Passenger and Driver Profile</h1>
+        <h1>Nothing Yet</h1>
     </body>
 </html>

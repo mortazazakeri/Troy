@@ -82,13 +82,12 @@ public class Responsibility
 
     public boolean doRegister(String name, String username, String password, String role)
     {
-        if(name == null | username == null | password == null | role == null)
+        if (name == null | username == null | password == null | role == null)
         {
             return false;
-        }
-        else if( username.length()<4 | password.length()<4)
+        } else if (username.length() < 4 | password.length() < 4)
         {
-             return false;
+            return false;
         }
         switch (role)
         {
@@ -99,8 +98,7 @@ public class Responsibility
                 {
                     ODBClass.getInstance().insertDriver(name, username, password, 1, 2);
                     return true;
-                }
-                else
+                } else
                 {
                     return false;
                 }
@@ -109,8 +107,8 @@ public class Responsibility
                 User p = ODBClass.getInstance().readUser(username);
                 if (p == null)
                 {
-                   ODBClass.getInstance().insertUser(name, username, password);
-                   return true;
+                    ODBClass.getInstance().insertUser(name, username, password);
+                    return true;
                 } else
                 {
                     return false;
@@ -119,8 +117,8 @@ public class Responsibility
                 Manager m = ODBClass.getInstance().readManager(username);
                 if (m == null)
                 {
-                   ODBClass.getInstance().insertManager(name, username, password);
-                   return true;
+                    ODBClass.getInstance().insertManager(name, username, password);
+                    return true;
                 } else
                 {
                     return false;
@@ -128,4 +126,74 @@ public class Responsibility
         }
         return false;
     }
+
+    public boolean doManagerEdit(String name, String username, String password)
+    {
+        if (name == null | username == null | password == null)
+        {
+            return false;
+        } else if (username.length() < 4 | password.length() < 4)
+        {
+            return false;
+        } else
+        {
+            Manager m = ODBClass.getInstance().readManager(username);
+            if (m == null)
+            {
+                return false;
+            } else
+            {
+                ODBClass.getInstance().updateManager(name, username, password);
+                return true;
+            }
+        }
+
+    }
+
+    public boolean doDriverEdit(String name, String username, String password, String ln)
+    {
+        if (name == null | username == null | password == null | "".equals(name) | "".equals(username) | "".equals(password))
+        {
+            return false;
+        } else if (username.length() < 4 | password.length() < 4)
+        {
+            return false;
+        } else
+        {
+            Driver d = ODBClass.getInstance().readDriver(username);
+            if (d == null)
+            {
+                return false;
+            } else
+            {
+                int ln2 = Integer.parseInt(ln);
+                ODBClass.getInstance().updateDriver(name, username, password, ln2, d.getVehicle());
+                return true;
+            }
+        }
+    }
+
+    public boolean doPassengerEdit(String name, String username, String password)
+    {
+        if (name == null | username == null | password == null | "".equals(name) | "".equals(username) | "".equals(password))
+        {
+            return false;
+        } else if (username.length() < 4 | password.length() < 4)
+        {
+            return false;
+        } else
+        {
+            User u = ODBClass.getInstance().readUser(username);
+            if (u == null)
+            {
+                return false;
+            } else
+            {
+                
+                ODBClass.getInstance().updateUser(name, username, password);
+                return true;
+            }
+        }
+    }
+
 }

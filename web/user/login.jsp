@@ -1,14 +1,15 @@
 <%-- 
-    Document   : register
-    Created on : Dec 7, 2016, 4:24:22 PM
+    Document   : login
+    Created on : Dec 23, 2016, 1:09:43 AM
     Author     : Morteza
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+
 <html>
     <head>
-       <title>TaxiFinder - Register</title>
+        <title>TaxiFinder - Login</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <%
@@ -22,15 +23,10 @@
     </head>
     <body>
         <div>
-            <h2> User Register </h2>
-            <form action="./registerprocess.jsp" method="post">
+            <h2>User Login</h2>
+            <form action="./loginprocess.jsp" method="post">
                 <fieldset>
                     <legend>User information:</legend>
-                    First Name:<br>
-                    <input type="text" name="name" value=""><br>
-                   <!-- Last Name:<br>
-                    <input type="text" name="lastname" value=""><br>      
-                   -->
                     Username:<br>
                     <input type="text" name="username" value=""><br>
                     Password:<br>
@@ -39,14 +35,15 @@
                     <select name="role">
                         <option value="driver">Driver</option>
                         <option value="passenger">Passenger</option>
+                        <option value="manager">Manager</option>
                     </select>
                     <br>
-                    <input type="submit" value="Register">
+                    <input type="submit" value="Login">
                 </fieldset>
             </form> 
-            <a href="../index.jsp"> Back to Home </a> 
-            | 
-            <a href="./login.jsp"> Login </a>
         </div>
+        <a href="../index.jsp"> Back to Home </a> 
+         | 
+        <a href="./register.jsp"> Register </a>
     </body>
 </html>

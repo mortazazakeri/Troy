@@ -12,6 +12,14 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>TaxiFinder - Register Process</title>
+        <%
+            if (request.getMethod().toString().equals("POST") == false)
+            {
+                String site = new String("../index.jsp");
+                response.setStatus(response.SC_MOVED_TEMPORARILY);
+                response.setHeader("Location", site);
+            }
+        %>
     </head>
     <body>        
         <%
@@ -21,16 +29,16 @@
             String username = request.getParameter("username");
             String password = request.getParameter("password");
             String role = request.getParameter("role");
-            
+
             db.Responsibility register = new Responsibility();
-            boolean b  = register.doRegister(name, username, password, role);
-            
+            boolean b = register.doRegister(name, username, password, role);
+
             if (b == true)
             {
                 out.println("You are successfully Register and logged in!");
-                
+
                 session.setAttribute("session", "TRUE");
-                session.setAttribute("status", "logged");              
+                session.setAttribute("status", "logged");
                 session.setAttribute("name", name);
                 session.setAttribute("username", username);
                 session.setAttribute("password", password);
@@ -40,8 +48,7 @@
                 String site = new String("../index.jsp");
                 response.setStatus(response.SC_MOVED_TEMPORARILY);
                 response.setHeader("Location", site);
-            } 
-            else
+            } else
             {
                 out.print(" Sorry, something is wrong!  <br> ");
                 out.print(" Chack your inputs and ");

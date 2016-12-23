@@ -29,8 +29,8 @@ import java.util.logging.Handler;
 public class ODBClass
 {
 
-    private static ODBClass odbclassInstance=null;
-    
+    private static ODBClass odbclassInstance = null;
+
     private final String EDGE = "DBEdge";
     private final String DRIVER = "Driver";
     private final String MANAGER = "Manager";
@@ -44,7 +44,6 @@ public class ODBClass
     private ODatabaseDocumentTx docDB;
     private final OSequence nodeseq, dbedgeseq, vehicleseq;
     private Handler handler;
-    
 
     @SuppressWarnings("resource")
     private ODBClass()
@@ -54,21 +53,18 @@ public class ODBClass
         nodeseq = graphDB.getRawGraph().getMetadata().getSequenceLibrary().getSequence("nodeseq");
         dbedgeseq = graphDB.getRawGraph().getMetadata().getSequenceLibrary().getSequence("dbedgeseq");
         vehicleseq = graphDB.getRawGraph().getMetadata().getSequenceLibrary().getSequence("vehicleseq");
-        
+
     }
 
     public static ODBClass getInstance()
     {
-        if(odbclassInstance ==null)
+        if (odbclassInstance == null)
         {
             odbclassInstance = new ODBClass();
         }
         return odbclassInstance;
     }
-    
-    
-    
-    
+
     public void insertDriver(String name, String userName,
             String password, int licenseNumber, int vehicleID)
     {
@@ -474,8 +470,7 @@ public class ODBClass
         }
     }
 
-    public void updateManager(String name, String userName,
-            String password)
+    public void updateManager(String name, String userName, String password)
     {
         OCommandSQL query = new OCommandSQL("UPDATE " + MANAGER
                 + " SET name = ?, password = ?"

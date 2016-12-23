@@ -22,27 +22,33 @@
                 text-align: left;    
             }
         </style>
-
         <title>TaxiFinder - Manager Profile </title>
-    </head>
-    <body>
         <%
             if (session.getAttribute("status") == null)
             {
                 String site = new String("./login.html");
                 response.setStatus(response.SC_MOVED_TEMPORARILY);
                 response.setHeader("Location", site);
+            } else if (session.getAttribute("role").toString().equals("manager") == false
+                    || request.getParameter("username").toString().equals(session.getAttribute("username").toString()) == false)
+            {
+                String site = new String("../error/permission.jsp");
+                response.setStatus(response.SC_MOVED_TEMPORARILY);
+                response.setHeader("Location", site);
             }
         %>
+    </head>
+    <body>
+
         <h2>Welcome Dear <% out.print(session.getAttribute("username")); %> to Administrator Console</h2>
 
         <div>
             <form action="./manageredit.jsp" method="post">
                 <h3>View and Edit Personal Information:</h3>
                 <fieldset>
-                    <legend>User information:</legend>
+                    <legend>Administrator information:</legend>
                     Name:<br>
-                    <input type="text" name="firstname" value="<%out.print(session.getAttribute("name"));%>"> <br>                   
+                    <input type="text" name="name" value="<%out.print(session.getAttribute("name"));%>"> <br>                   
                     Username:<br>
                     <input type="text" name="username" value="<%out.print(session.getAttribute("username"));%>" readonly > <br>
                     Password:<br>
@@ -54,13 +60,8 @@
                     <br>
                     <input type="submit" value="Update">
                 </fieldset>
-                <p><%
-                    if (request.getParameter("action") != null)
-                    {
-                        out.print("Your profile update!");
-                        }%></p>
             </form> 
-
+            <br>
             <h3>List of Registered Drivers:</h3>
             <table >
                 <tr>
@@ -118,5 +119,6 @@
             | 
             <a href="./logout.jsp"> Logout </a>
             <br>
-            </body>
-            </html>
+        </div>
+    </body>
+</html>
