@@ -1,0 +1,39 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Dec 8, 2016, 1:56:32 PM
+    Author     : Amirian
+*/
+
+
+#inner-details {
+  font-size:12px;
+}
+
+span.close {
+	color:#FF5555;
+	cursor:pointer;
+	font-weight:bold;
+	margin-left:3px;
+}
+
+span.name {
+  cursor: pointer;
+}
+
+/*TOOLTIPS*/
+.tip {
+   text-align: left;
+   width:auto;
+   max-width:500px;
+}
+
+.tip-title {
+  font-size: 11px;
+  text-align:center;
+  margin-bottom:2px;
+}
+
