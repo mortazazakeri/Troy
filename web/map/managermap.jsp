@@ -4,13 +4,16 @@
     Author     : Amirian
 --%>
 
-
-
+<%@page import="db.ODBClass"%>
+<%@page import="db.Node"%>
+<%@page import="db.GraphListItem"%>
 <%@page import="net.sf.json.JSONObject"%>
 <%@page import="java.util.ArrayList"%> 
 <%@page import="java.util.HashMap"%> 
 <%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
+<%@page import="db.Edge"%>
+
 
 
 
@@ -19,7 +22,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title> TaxiFinder - Map </title>
+<title> TF - Map Manager </title>
 
 <!-- CSS Files -->
 <link type="text/css" href="../css/base.css" rel="stylesheet" />
@@ -46,7 +49,7 @@
     
     
     jsonObj.accumulate("weekdays", list);
-    //jsonObj.
+    
     
     Map map = new HashMap();
     map.put("A", "aa");
@@ -58,41 +61,160 @@
     jsonObj.put("city", "Mumbai"); 
     jsonObj.put("country", "India");
     jsonObj.accumulateAll(map);*/
-    JSONObject jsonObj= new JSONObject();
     
-    List<String> Adjacencies = new ArrayList<String>();
+    
+    //JSONObject jsonObj= new JSONObject();
+    
+    /*List<String> Adjacencies = new ArrayList<String>();
     Adjacencies.add("v2");
     Adjacencies.add("v3");
-    Adjacencies.add("v4");
+    Adjacencies.add("v4");*/
     
-    /*Map adData = new HashMap();
-    adData.put("$color", "#C74243"); 
-    jsonObj.put("", value)*/
     
-    Map nodeData = new HashMap();
+    
+    
+    /*Map nodeData = new HashMap();
     nodeData.put("$color", "#C74243");
     nodeData.put("$type", "circle");
-    nodeData.put("$dim", 10);
+    nodeData.put("$dim", 10);*/
     
+   
     
-    jsonObj.accumulate("adjacencies", Adjacencies);
-    jsonObj.put("data", nodeData);
-    
-    jsonObj.put("id", "v1"); 
-    jsonObj.put("name", "v1");
-    
-    String aaaa = jsonObj.toString();
-    
-    String[] ss = new String[2]; 
+   /* String[] ss = new String[2]; 
     String t="\"v5\"";
     String st1 ="{\"adjacencies\":[" + t + "],\"data\":{\"$color\":\"#C74243\",\"$type\":\"circle\",\"$dim\":10},\"id\":\"v1\",\"name\":\"v1\"}";
     String st2 ="{\"adjacencies\":[],\"data\":{\"$color\":\"#C74243\",\"$type\":\"circle\",\"$dim\":10},\"id\":\"v2\",\"name\":\"v2\"}";
     
     ss[0]=st1;
-    ss[1]=st2;
+    ss[1]=st2;*/
     
-    //Object obj = parser.parse(s);
-    //org.json.simple.JSONArray array = (JSONArray)obj;
+    JSONObject jsonObj= new JSONObject();
+    
+    List<String> jsonDataStrings = new ArrayList<String>();
+    
+    List<Node> nodesList;
+    List<GraphListItem> edgesList;
+    nodesList = db.ODBClass.getInstance().readAllNodes();
+    edgesList = db.ODBClass.getInstance().getGraphForDrawing();
+    
+    String messageString = "";
+    
+    /////////////////////////////Request for add new edge or node////////////////////////////////
+    if (request.getMethod().equals("POST")) 
+    {
+        // request for adding a new node
+        if (request.getParameter("FormRecognizer").equals("Node")) 
+        {
+            String newNodeName = request.getParameter("NewNodeName");
+            boolean replica = false;
+            for(Node node : nodesList)
+            {
+                if (node.getName().equals(newNodeName)) 
+                {
+                    replica = true;
+                }
+            }
+
+            if (replica) 
+            {
+                //can not add two nodes with same names
+                messageString = "you have already a node with name:'" + newNodeName + "'. please choose another name.";
+            }
+            else
+            {
+                db.ODBClass.getInstance().insertNode(newNodeName, 0, 0, null);
+            }
+        }
+        
+        // request for adding a new edge
+        else if (request.getParameter("FormRecognizer").equals("Edge")) 
+        {
+            String startNodeName =request.getParameter("StartNodeName");
+            String endNodeName =request.getParameter("EndNodeName");
+            int startNodeId = -1;
+            int endNodeId = -1;
+
+            for (Node node : nodesList) 
+            {
+                if (node.getName().equals(startNodeName) && startNodeId == -1) 
+                {
+                    if (node.getIdr() != endNodeId) 
+                    {
+                        startNodeId = node.getIdr();
+                        continue;
+                    }
+                }
+
+                else if (node.getName().equals(endNodeName)&& endNodeId == -1) 
+                {
+                    if (node.getIdr() != startNodeId) 
+                    {
+                        endNodeId=node.getIdr();
+                        continue;
+                    }
+                }
+            }
+
+            if (startNodeId == -1 || endNodeId == -1) 
+            {
+                messageString = "can not add the edge, because one or more nodes you entered("+
+                        startNodeName + ","+ endNodeName +") does not exist.";
+            }
+            else{
+                db.ODBClass.getInstance().insertEdge(0, 2, startNodeId, endNodeId);
+            }
+        }
+        
+        nodesList.clear();
+        edgesList.clear();
+
+        nodesList = db.ODBClass.getInstance().readAllNodes();
+        edgesList = db.ODBClass.getInstance().getGraphForDrawing();
+    }
+        
+    /////////////////////////////////////////////////////////////
+    List<String> Adjacencies = new ArrayList<String>();
+    Map nodeData = new HashMap();
+    
+    for (Node node : nodesList) {
+        
+            jsonObj.clear();
+            Adjacencies.clear();
+            jsonObj.accumulate("adjacencies", Adjacencies);
+            
+            nodeData.clear();
+            nodeData.put("$color", "#C74243");
+            nodeData.put("$type", "circle");
+            nodeData.put("$dim", 10);
+            jsonObj.put("data", nodeData);
+            
+            jsonObj.put("id", node.getName());
+            jsonObj.put("name", node.getName());
+            
+            jsonDataStrings.add(jsonObj.toString());
+        }
+    
+    
+    for (GraphListItem edge : edgesList) {
+            
+            jsonObj.clear();
+            
+            Adjacencies.clear();
+            Adjacencies.add(edge.getDestinationNodeName());
+            jsonObj.accumulate("adjacencies", Adjacencies);
+            
+            nodeData.clear();
+            nodeData.put("$color", "#C74243");
+            nodeData.put("$type", "circle");
+            nodeData.put("$dim", 10);
+            jsonObj.put("data", nodeData);
+            
+            jsonObj.put("id", edge.getStartNodeName());
+            jsonObj.put("name", edge.getStartNodeName());
+            
+            jsonDataStrings.add(jsonObj.toString());
+        }
+    
 %>
 <!-- Mohsen JavaScript Codes -->
 <script language="javascript" type="text/javascript"> 
@@ -101,20 +223,14 @@
         // get data base into Json variable 
 	function init()
 	{       
-                alert('<%=aaaa%>');
-		
-                json.push(<%=aaaa%>);
-                DrawGraph(); 
-	}
-        
-        function temp()
-        {
             <%  
-            for (int i=0; i < ss.length; i++) {  
+            for (int i=0; i < jsonDataStrings.size(); i++) {  
             %>  
-            json.push(<%=ss[i]%>);
+            json.push(<%=jsonDataStrings.get(i)%>); 
             <%}%>
-        }
+            DrawGraph();
+            document.getElementById('messageLabel').innerHTML = "<%=messageString%>";
+	}
 	
 	function AddNode()
 	{
@@ -133,9 +249,6 @@
 		DrawGraph();
 	}
 
-	
-	
-	
 </script>
 </head>
 
@@ -144,7 +257,34 @@
 
 <div id="left-container">
         <div class="text">
-			<h3>Build Map</h3> 
+            
+            <form action="./managermap.jsp" method="post">
+                <fieldset>
+                    <legend>Add Node:</legend>
+                    NodeName:<br>
+                    <input type="text" name="NewNodeName" value="" id="NewNodeName"><br>
+                    <input type="hidden" name="FormRecognizer" value="Node">
+                    <br>
+                    <input type="submit" value="Add Node">
+                </fieldset>
+            </form> 
+            
+            <form action="./managermap.jsp" method="post">
+                <fieldset>
+                    <legend>Add Edge</legend>
+                    Start Node Name:<br>
+                    <input type="text" name="StartNodeName" value="" id="StartNodeName"><br>
+                    End Node Name:<br>
+                    <input type="text" name="EndNodeName" value="" id="EndNodeName"><br>
+                    <input type="hidden" name="FormRecognizer" value="Edge">
+                    <br>
+                    <input type="submit" value="Add Edge">
+                </fieldset>
+            </form>
+            
+            <label style="color: red" id="messageLabel"></label>
+			<!--
+                        <h3>Build Map</h3> 
 			<h4>Create New Node:</h4> 
 			Node Name:<input type="text" name="NodeName1" id="NewNodeInput"><br>
 			<button type="button" onclick="AddNode()">Create Node</button> 
@@ -154,7 +294,7 @@
 			First Node:<input type="text" name="NodeName2" id="FirsNodeNameInput"><br>
 			Second Node:<input type="text" name="NodeName3" id="SecondNodeNameInput"><br>
 			<button type="button" onclick="AddEdge()">Create Edge</button>
-			<br><br>  
+			<br><br>  -->
         </div>
 
         <div id="id-list"></div>

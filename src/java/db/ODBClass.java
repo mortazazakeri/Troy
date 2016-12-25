@@ -42,7 +42,7 @@ public class ODBClass
     private final String DBNAME = "Taxi";
     private OrientGraph graphDB;
     private ODatabaseDocumentTx docDB;
-    private final OSequence nodeseq, dbedgeseq, vehicleseq;
+    private OSequence nodeseq, dbedgeseq, vehicleseq;
     private Handler handler;
 
     @SuppressWarnings("resource")
@@ -63,6 +63,11 @@ public class ODBClass
             odbclassInstance = new ODBClass();
         }
         return odbclassInstance;
+    }
+    
+    public void setNull()
+    {
+        odbclassInstance = null;
     }
 
     public void insertDriver(String name, String userName,
@@ -144,6 +149,14 @@ public class ODBClass
     public void insertEdge(float distance, int traffic, int startNodeID,
             int endNodeID)
     {
+        try
+        {
+            dbedgeseq.current();
+        }
+        catch(Exception e)
+        {
+            dbedgeseq = graphDB.getRawGraph().getMetadata().getSequenceLibrary().getSequence("dbedgeseq");
+        }
         graphDB.command(new OCommandSQL("CREATE EDGE " + EDGE
                 + " FROM (SELECT FROM " + NODE
                 + " WHERE idr = ?) TO (SELECT FROM " + NODE + " WHERE idr = ?)"
@@ -199,7 +212,7 @@ public class ODBClass
             String in = v.getProperty("in").toString().split("\\[")[1];
             in = in.substring(0, in.length() - 1);
             result.add(new GraphListItem(v.getProperty("distance"),
-                    v.getProperty("traffic"),
+                    v.getProperty("traffic"), 0, 0,
                     out,
                     in));
         }
@@ -209,11 +222,13 @@ public class ODBClass
                     new OCommandSQL("SELECT FROM " + NODE + " WHERE @rid = ?")).execute(result.get(i).getStartNodeName()))
             {
                 result.get(i).setStartNodeName(v.getProperty("name"));
+                result.get(i).setStartNodeID(v.getProperty("idr"));
             }
             for (Vertex v : (Iterable<Vertex>) graphDB.command(
                     new OCommandSQL("SELECT FROM " + NODE + " WHERE @rid = ?")).execute(result.get(i).getDestinationNodeName()))
             {
                 result.get(i).setDestinationNodeName(v.getProperty("name"));
+                result.get(i).setDestinationNodeID(v.getProperty("idr"));
             }
         }
         return result;
@@ -245,6 +260,14 @@ public class ODBClass
             driversIDs = new ArrayList<>();
         }
         Vertex v = graphDB.addVertex("class:" + NODE);
+        try
+        {
+            nodeseq.current();
+        }
+        catch(Exception e)
+        {
+            nodeseq = graphDB.getRawGraph().getMetadata().getSequenceLibrary().getSequence("nodeseq");
+        }
         v.setProperty("idr", nodeseq.next());
         v.setProperty("name", name);
         v.setProperty("lat", latitude);

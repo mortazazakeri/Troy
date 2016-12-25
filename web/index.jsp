@@ -96,11 +96,15 @@
             <br>
             <a href = <% out.print(loginOrLogoutLink);%> > <b> <%out.print(loginOrLogoutName);%> </b> </a>
             <br>
-            <a href="./mapmanager.jsp" > <b> Map Manager  </b> </a>
-            <br>
             <a href="" > <b> Request for Trip  </b> </a>
             <br>
-
+            <a href="./map/managermap.jsp" target="_blank"> <b> Manager Map </b> </a>
+            <br>
+            <a href="./map/drivermap.jsp" target="_blank"> <b> Driver Map </b> </a>
+            <br>
+            <a href="./map/passengermap.jsp" target="_blank"> <b> Passenger Map </b> </a>
+            <br>
+            
         </div>
 
     </body>
