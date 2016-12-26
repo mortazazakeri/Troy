@@ -53,7 +53,6 @@ public class ODBClass
         nodeseq = graphDB.getRawGraph().getMetadata().getSequenceLibrary().getSequence("nodeseq");
         dbedgeseq = graphDB.getRawGraph().getMetadata().getSequenceLibrary().getSequence("dbedgeseq");
         vehicleseq = graphDB.getRawGraph().getMetadata().getSequenceLibrary().getSequence("vehicleseq");
-
     }
 
     public static ODBClass getInstance()
@@ -62,6 +61,10 @@ public class ODBClass
         {
             odbclassInstance = new ODBClass();
         }
+        odbclassInstance.graphDB.getRawGraph().activateOnCurrentThread();
+        odbclassInstance.graphDB.getRawGraph().reload();
+        odbclassInstance.docDB.activateOnCurrentThread();
+        odbclassInstance.docDB.reload();
         return odbclassInstance;
     }
     
