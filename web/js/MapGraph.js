@@ -98,6 +98,8 @@ function DrawGraph(){
       var nameContainer = document.createElement('span'),
           closeButton = document.createElement('span'),
           style = nameContainer.style;
+  //////////////////////////////////////Added by Mohsen//////////////////////////////////////////////
+      
       nameContainer.className = 'name';
       nameContainer.innerHTML = node.name;
       closeButton.className = 'close';
@@ -125,6 +127,9 @@ function DrawGraph(){
       //and lineWidth of its adjacencies.
       nameContainer.onclick = function() {
         //set final styles
+        
+        //////////////////////////////////////Added by Mohsen//////////////////////////////////////////////
+        ff1(node.name);
         fd.graph.eachNode(function(n) {
           if(n.id != node.id) delete n.selected;
           n.setData('dim', 7, 'end');
@@ -156,7 +161,7 @@ function DrawGraph(){
         // Build the right column relations list.
         // This is done by traversing the clicked node connections.
         var html = "<h4>" + node.name + "</h4><b> connections:</b><ul><li>",
-            list = [];
+            list = []; 
         node.eachAdjacency(function(adj){
           if(adj.getData('alpha')) list.push(adj.nodeTo.name);
         });
@@ -196,5 +201,3 @@ function DrawGraph(){
   });
   // end
 }
-
-

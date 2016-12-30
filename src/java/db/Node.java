@@ -12,10 +12,10 @@ public class Node
 
 	private final int langtitude;
 
-	private final List<Integer> driversIDs;
+	private final List<String> driversIDs;
 
 	public Node(int idr, String name, int latitude, int langtitude,
-			List<Integer> driversIDs)
+			List<String> driversIDs)
 	{
 		this.idr = idr;
 		this.driversIDs = driversIDs;
@@ -24,7 +24,7 @@ public class Node
 		this.name = name;
 	}
 
-	public List<Integer> getDriversIDs()
+	public List<String> getDriversIDs()
 	{
 		return driversIDs;
 	}
