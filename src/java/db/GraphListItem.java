@@ -15,10 +15,12 @@ public class GraphListItem
         private int startNodeID;
         
         private int destinationNodeID;
+        
+        private int edgeID;
 
 	public GraphListItem(float distance, int traffic, int startNodeID, int destinationNodeID,
                                     String startNodeName,
-                                    String destinationNodeName)
+                                    String destinationNodeName, int edgedID)
 	{
             this.distance = distance;
             this.traffic = traffic;
@@ -26,11 +28,16 @@ public class GraphListItem
             this.destinationNodeID = destinationNodeID;
             this.startNodeName = startNodeName;
             this.destinationNodeName = destinationNodeName;
+            this.edgeID = edgedID;
 	}
 
     public float getDistance() 
     {
         return distance;
+    }
+
+    public int getEdgeID() {
+        return edgeID;
     }
 
     public int getTraffic() 
