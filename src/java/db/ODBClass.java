@@ -217,7 +217,7 @@ public class ODBClass
             result.add(new GraphListItem(v.getProperty("distance"),
                     v.getProperty("traffic"), 0, 0,
                     out,
-                    in));
+                    in, v.getProperty("idr")));
         }
         for (int i = 0; i <= result.size() - 1; i++)
         {
