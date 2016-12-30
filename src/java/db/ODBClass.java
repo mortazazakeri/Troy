@@ -104,6 +104,27 @@ public class ODBClass
             return null;
         }
     }
+    
+    //this method added by Mohsen
+    public Driver readDriverBy_rid(String rid)
+    {
+        OSQLSynchQuery<ODocument> query = new OSQLSynchQuery<>(
+                "SELECT FROM " + DRIVER + " WHERE @rid = ?");
+        try
+        {
+            docDB.activateOnCurrentThread();
+            List<ODocument> result = docDB.command(query).execute(rid);
+            return new Driver(
+                    (String) result.get(0).field("name"),
+                    (String) result.get(0).field("username"),
+                    (String) result.get(0).field("password"),
+                    (int) result.get(0).field("license_number"),
+                    (int) result.get(0).field("vehicle_id"));
+        } catch (Exception e)
+        {
+            return null;
+        }
+    }
 
     public List<Driver> readAllDrivers()
     {
@@ -256,7 +277,7 @@ public class ODBClass
     }
 
     public void insertNode(String name, int latitude, int langtitude,
-            List<Integer> driversIDs)
+            List<String> driversIDs)
     {
         if (driversIDs == null)
         {
@@ -318,7 +339,7 @@ public class ODBClass
     }
 
     public void updateNode(int idr, String name, int latitude, int langtitude,
-            List<Integer> driversIDs)
+            List<String> driversIDs)
     {
         if (driversIDs == null)
         {
