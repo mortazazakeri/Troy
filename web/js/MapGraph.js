@@ -160,8 +160,8 @@ function DrawGraph(){
         });
         // Build the right column relations list.
         // This is done by traversing the clicked node connections.
-        var html = "<h4>" + node.name + "</h4><b> connections:</b><ul><li>",
-            list = []; 
+        var html = "<h4>" + node.name + "</h4><b>Has Connections:</b><ul><li>",
+            list = [];
         node.eachAdjacency(function(adj){
           if(adj.getData('alpha')) list.push(adj.nodeTo.name);
         });

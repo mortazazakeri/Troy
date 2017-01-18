@@ -9,10 +9,15 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>TaxiFinder - Access Permission</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Oops!</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
     </head>
     <body>
-        <h1>Sorry, You dont have permission to access this web page.</h1>
-        <a href="../index.jsp" > Back to Home!</a>
+        <div class="w3-panel w3-red">
+            <h1>Sorry, You do not have permission to access this page.</h1>
+            <a href="../index.jsp" > Back to Home!</a>
+        </div> 
     </body>
 </html>
