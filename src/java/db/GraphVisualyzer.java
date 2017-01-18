@@ -28,7 +28,6 @@ public class GraphVisualyzer
         edgesList = db.ODBClass.getInstance().getGraphForDrawing();
     }
     
-    
     private void reNewData()
     {
         nodesList.clear();

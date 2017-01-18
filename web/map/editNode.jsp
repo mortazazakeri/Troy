@@ -43,15 +43,12 @@
                     String newNodeIDr = request.getParameter("nodeidr");
                     int newLatitude = Integer.parseInt(request.getParameter("latitude"));
                     int newLangtitude = Integer.parseInt(request.getParameter("langtitude"));
-
                     List<String> newDriverUsernames = new ArrayList<String>();
-
                     if (driversUserNamesChecked != null) {
                         for (int i = 0; i < driversUserNamesChecked.length; i++) {
                             newDriverUsernames.add(driversUserNamesChecked[i]);
                         }
                     }
-
                     List<Node> nodesList = ODBClass.getInstance().readAllNodes();
                     boolean replica = false;
                     for (Node node : nodesList) {
@@ -74,25 +71,20 @@
                     }
                 }
             }
-
             List<Node> nodesList = ODBClass.getInstance().readAllNodes();
             Node currentNode = new Node(0, "temp", 0, 0, null);
-
             for (Node node : nodesList) {
                 if (node.getName().equals(nodeName)) {
                     currentNode = node;
                     break;
                 }
             }
-
             nodeIdr = Integer.toString(currentNode.getIdr());
             langtitude = currentNode.getLangtitude();
             latitude = currentNode.getLatitude();
             List<String> nodeDriversUsernames = currentNode.getDriversIDs(); //getDriversUsernames()
-
             List<String> otherDriversUserNames = new ArrayList<String>();
             List<Driver> allDrivers = ODBClass.getInstance().readAllDrivers();
-
             for (Driver driver : allDrivers) {
                 if (!nodeDriversUsernames.contains(driver.getUserName())) {
                     otherDriversUserNames.add(driver.getUserName());
@@ -107,9 +99,6 @@
         %>
             nodeDriversUserNames.push("<%=nodeDriversUsernames.get(i)%>");
         <%}%>
-
-
-
         <%
             for (int j = 0; j < otherDriversUserNames.size(); j++) {
         %>
@@ -136,7 +125,7 @@
                 int i = 0;
                 String cb = "";
                 for (String s : nodeDriversUsernames) {
-                    cb = "<input class=\"w3-check\" type=\"checkbox\" id=\"checkbox" + i + "\"" + " name=\"checkbox\" value=\"" + s + "\">";
+                    cb = "<input class=\"w3-check\" type=\"checkbox\" checked=\"checked\" id=\"checkbox" + i + "\"" + " name=\"checkbox\" value=\"" + s + "\">";
                     out.print("<label class=\"w3-label w3-text-black\">" + s + "</label>");
                     out.print(cb);
                     i++;
