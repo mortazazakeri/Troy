@@ -194,7 +194,7 @@
                 <form class="w3-container" action="./editNode.jsp" method="post" id="editForm" style="visibility: hidden">
 
                     <label class="w3-label">Node Name</label>
-                    <input class="w3-input w3-center" type="text" name="editNodeName" id="editNodeName"/>
+                    <input class="w3-input w3-center" type="text"  name="editNodeName"  id="editNodeName" readonly="readonly"  />
                     <input type="hidden" name="FormRecognizer" value="editForm"/>   
                     <input class="w3-input w3-btn w3-margin-top w3-center" type="submit" value="Edit Node"/>
 
