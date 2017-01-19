@@ -94,68 +94,74 @@
         </form> 
 
         <div>
-            <h2> Passenger Trip List</h2>
+
+            <br/>
+            <h2> Passenger Current Trip Requests</h2>
             <table class="w3-table-all">
                 <thead>
                     <tr class="w3-pink">
                         <th>ID</th>
                         <th>Driver Name</th>
-                        <th>Home</th>
-                        <th>Destination</th>
-
-                    </tr>
-                </thead>
-                <%
-                    int i = 1;
-                    for (db.Trip trip
-                            : db.ODBClass.getInstance().readPassengersTrips((String) session.getAttribute("username")))
-                    {
-                        out.print("<tr>");
-                        out.print("<td>" + i + "</td>");
-                        out.print("<td>" + trip.getDriverID() + "</td>");
-                        out.print("<td>" + trip.getStartNodeID() + "</td>");
-                        out.print("<td>" + trip.getEndNodeID() + "</td>");
-                        // out.print("<td>" + "<a href=\".\\driveredit.jsp?username=" + d.getUserName() + "&action=edit" + "\">" + "<img src=\"../rsc/edit.png\" class=\"w3-round\" alt=\"edit?\" style=\"width: 70%\">" + "</a>" + "</td>");
-                        // out.print("<td>" + "<a href=\".\\driveredit.jsp?username="
-                        // + d.getUserName() + "&action=delete" + "\">" + "<img src=\"../rsc/rubbish-bin.png\" class=\"w3-round\" alt=\"delete?\" style=\"width: 50%\">" + "</a>" + "</td>");
-                        out.print("</tr>");
-                        i++;
-                    }
-                %>
-            </table>  
-
-            <h2> Passenger Trip Current Request</h2>
-            <table class="w3-table-all">
-                <thead>
-                    <tr class="w3-pink">
-                        <th>ID</th>
-                        <th>Driver Name</th>
-                        <th>Home</th>
-                        <th>Destination</th>
+                        <th>From</th>
+                        <th>To</th>
                         <th>Status</th>
                     </tr>
                 </thead>
                 <%
-                    trip.TripRequest t = trip.TripRequestManager.getTripRequsetManagerInstance().getTripRequestOfPessenger((String) session.getAttribute("username"));
+                    for (trip.TripRequest t
+                            : trip.TripRequestManager.getTripRequsetManagerInstance().
+                            getTripRequestsOfPessenger((String) session.getAttribute("username")))
 
-                    out.print("<tr>");
-                    if (t != null)
                     {
+                        out.print("<tr>");
+
                         out.print("<td>" + t.getRequestId() + "</td>");
                         out.print("<td>" + t.getDriverUsername() + "</td>");
-                        out.print("<td>" + t.getStartNode() + "</td>");
-                        out.print("<td>" + t.getDestinationNode() + "</td>");
+                        out.print("<td>" + t.getStartNodeName() + "</td>");
+                        out.print("<td>" + t.getDestinationNodeName() + "</td>");
                         out.print("<td>" + t.getStatus() + "</td>");
-                       // out.print("<td>" + "<a href=\".\\driveredit.jsp?username=" + d.getUserName() + "&action=edit" + "\">" + "<img src=\"../rsc/edit.png\" class=\"w3-round\" alt=\"edit?\" style=\"width: 70%\">" + "</a>" + "</td>");
+                        // out.print("<td>" + "<a href=\".\\driveredit.jsp?username=" + d.getUserName() + "&action=edit" + "\">" + "<img src=\"../rsc/edit.png\" class=\"w3-round\" alt=\"edit?\" style=\"width: 70%\">" + "</a>" + "</td>");
                         // out.print("<td>" + "<a href=\".\\driveredit.jsp?username="
                         // + d.getUserName() + "&action=delete" + "\">" + "<img src=\"../rsc/rubbish-bin.png\" class=\"w3-round\" alt=\"delete?\" style=\"width: 50%\">" + "</a>" + "</td>");
-                    }
-                    out.print("</tr>");
 
+                        out.print("</tr>");
+                    }
                 %>
             </table>  
+            <br/>
+            <h2> Passenger Trip List History</h2>
+            <table class="w3-table-all">
+                <thead>
+                    <tr class="w3-pink">
+                        <th>ID</th>
+                        <th>Driver Name</th>
+                        <th>From</th>
+                        <th>To</th>
 
+                    </tr>
+                </thead>
+                <%
+                    int rowNumber = 1;
+                    for (db.Trip trip
+                            : db.ODBClass.getInstance().readPassengersTrips((String) session.getAttribute("username")))
+                    {
+                        String startNodeName = (String) db.ODBClass.getInstance().readNode(trip.getStartNodeID()).getName();
+                        String EndNodeName = (String) db.ODBClass.getInstance().readNode(trip.getEndNodeID()).getName();
+                        out.print("<tr>");
+                        out.print("<td>" + rowNumber++ + "</td>");
+                        out.print("<td>" + trip.getDriverID() + "</td>");
+                        out.print("<td>" + startNodeName + "</td>");
+                        out.print("<td>" + EndNodeName + "</td>");
+                        // out.print("<td>" + "<a href=\".\\driveredit.jsp?username=" + d.getUserName() + "&action=edit" + "\">" + "<img src=\"../rsc/edit.png\" class=\"w3-round\" alt=\"edit?\" style=\"width: 70%\">" + "</a>" + "</td>");
+                        // out.print("<td>" + "<a href=\".\\driveredit.jsp?username="
+                        // + d.getUserName() + "&action=delete" + "\">" + "<img src=\"../rsc/rubbish-bin.png\" class=\"w3-round\" alt=\"delete?\" style=\"width: 50%\">" + "</a>" + "</td>");
+                        out.print("</tr>");
+
+                    }
+                %>
+            </table>  
         </div>
+        <br/>
     </body>
 </html>
 

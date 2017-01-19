@@ -48,9 +48,21 @@
         <!-- Mohsen Created Functions -->
         <script language="javascript" type="text/javascript" src="../js/my_Functions.js"></script>
 
+        <%
+            if (session.getAttribute("status") == null)
+            {
+                String site = new String("./login.html");
+                response.setStatus(response.SC_MOVED_TEMPORARILY);
+                response.setHeader("Location", site);
+            } else if (session.getAttribute("role").toString().equals("manager") == false)
+            {
+                String site = new String("../error/permission.jsp");
+                response.setStatus(response.SC_MOVED_TEMPORARILY);
+                response.setHeader("Location", site);
+            }
+        %>
 
         <%
-
             GraphVisualyzer graphVis = new GraphVisualyzer();
             List<String> jsonDataStrings = new ArrayList<String>();
             String messageString = "";

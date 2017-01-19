@@ -35,22 +35,32 @@
             registerOrProfileName = new String("Register");
             registerOrProfileLink = new String("./user/register.jsp");
 
-            if (session != null) {
-                if (session.getAttribute("status") != null) {
+            String mapPageDynamicURL = "#";
+
+            if (session != null)
+            {
+                if (session.getAttribute("status") != null)
+                {
 
                     loginOrLogoutName = new String("Logout");
                     loginOrLogoutLink = new String("./user/logout.jsp");
 
                     registerOrProfileName = new String("Profile");
-                    if (session.getAttribute("role").toString().equals("manager")) {
+                    if (session.getAttribute("role").toString().equals("manager"))
+                    {
                         registerOrProfileLink = new String("./user/profilemanager.jsp?username="
                                 + session.getAttribute("username"));
-                    } else if (session.getAttribute("role").toString().equals("driver")) {
+                        mapPageDynamicURL = new String("./map/managermap.jsp");
+                    } else if (session.getAttribute("role").toString().equals("driver"))
+                    {
                         registerOrProfileLink = new String("./user/driveredit.jsp?username="
                                 + session.getAttribute("username"));
-                    } else if (session.getAttribute("role").toString().equals("passenger")) {
+                        mapPageDynamicURL = new String("./map/drivermap.jsp");
+                    } else if (session.getAttribute("role").toString().equals("passenger"))
+                    {
                         registerOrProfileLink = new String("./user/passengeredit.jsp?username="
                                 + session.getAttribute("username"));
+                        mapPageDynamicURL = new String("./map/passengermap.jsp");
                     }
                 }
             }
@@ -62,13 +72,15 @@
                     <a class="w3-padding-large w3-hover-white w3-large w3-red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
                 </li>
                 <li><a href="#" class="w3-padding-large w3-white">Home</a></li>
-                <li class="w3-hide-small"><a href="<% out.print(registerOrProfileLink);%>" class="w3-padding-large w3-hover-white"><b> <%out.print(registerOrProfileName);%> </b></a></li>
-                <li class="w3-hide-small"><a href="<% out.print(loginOrLogoutLink);%>" class="w3-padding-large w3-hover-white"><b> <%out.print(loginOrLogoutName);%> </b></a></li>
                     <%
-                        if (session != null && session.getAttribute("status") != null) {
-                            out.print("<li class=\"w3-hide-small\"><a href=\"\" class=\"w3-padding-large w3-hover-white\"><b> Request for Trip  </b></a></li>\n<li class=\"w3-hide-small\"><a href=\"./map/managermap.jsp\" class=\"w3-padding-large w3-hover-white\"><b> Manager Map </b></a></li>\n<li class=\"w3-hide-small\"><a href=\"./map/drivermap.jsp\" class=\"w3-padding-large w3-hover-white\"><b> Driver Map </b></a></li>\n<li class=\"w3-hide-small\"><a href=\"./map/passengermap.jsp\" class=\"w3-padding-large w3-hover-white\"><b> Passenger Map </b></a></li>");
+                        if (session != null && session.getAttribute("status") != null)
+                        {
+                            out.print("<li class=\"w3-hide-small\"><a href=\"" + mapPageDynamicURL + "\" class=\"w3-padding-large w3-hover-white\"><b> Map </b></a></li>");
                         }
                     %>
+                <li class="w3-hide-small"><a href="<% out.print(registerOrProfileLink);%>" class="w3-padding-large w3-hover-white"><b> <%out.print(registerOrProfileName);%> </b></a></li>
+                <li class="w3-hide-small"><a href="<% out.print(loginOrLogoutLink);%>" class="w3-padding-large w3-hover-white"><b> <%out.print(loginOrLogoutName);%> </b></a></li>                
+                <li class="w3-hide-small"><a href="#" class="w3-padding-large w3-hover-white"><b> Help and About </b></a></li>
             </ul>
 
             <!-- Navbar on small screens -->
@@ -76,10 +88,11 @@
                 <ul class="w3-navbar w3-left-align w3-large w3-black">
                     <li><a class="w3-padding-large" href="<% out.print(registerOrProfileLink);%>"><b> <%out.print(registerOrProfileName);%> </b></a></li>
                     <li><a class="w3-padding-large" href="<% out.print(loginOrLogoutLink);%>"><b> <%out.print(loginOrLogoutName);%> </b></a></li>
-                    <li><a class="w3-padding-large" href=""><b> Request for Trip  </b></a></li>
-                    <li><a class="w3-padding-large" href="./map/managermap.jsp"><b> Manager Map </b></a></li>
-                    <li><a class="w3-padding-large" href="./map/drivermap.jsp"> <b> Driver Map </b> </a></li>
-                    <li><a class="w3-padding-large" href="./map/passengermap.jsp"><b> Passenger Map </b></a></li>
+                    <!-- <li><a class="w3-padding-large" href=""><b> Request for Trip  </b></a></li>-->
+                    <li><a class="w3-padding-large" href="<% out.print(mapPageDynamicURL);%>"><b> Map </b></a></li>
+                    <!--<li><a class="w3-padding-large" href="./map/drivermap.jsp"> <b> Driver Map </b> </a></li>
+                    <li><a class="w3-padding-large" href="./map/passengermap.jsp"><b> Passenger Map </b></a></li>-->
+                    <li><a class="w3-padding-large" href=""><b> Help and About </b></a></li>
                 </ul>
             </div>
         </div>
@@ -88,7 +101,8 @@
         <header class="w3-container w3-orange w3-center w3-padding-128">
             <h1 class="w3-margin w3-jumbo w3-hover-text-grey">TaxiFinder Web App</h1>
             <%
-                if (session != null && session.getAttribute("status") != null) {
+                if (session != null && session.getAttribute("status") != null)
+                {
                     out.print("<h2> Weclome " + session.getAttribute("username") + "!" + " </h2>");
                 }
             %>

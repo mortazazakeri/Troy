@@ -96,68 +96,70 @@
                     %>
                 </div>
         </form> 
+        <br/>
 
+        <h2> Available Trip Requests </h2>
+        <table class="w3-table-all">
+            <thead>
+                <tr class="w3-pink">
+                    <th>ID</th>
+                    <th>Passenger Name</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Accept</th
+                </tr>
+            </thead>
+            <%
+                for (trip.TripRequest t
+                        : trip.TripRequestManager.getTripRequsetManagerInstance().getAllWaitingTripRequests())
+                {
+                    out.print("<tr>");
+                    out.print("<td>" + t.getRequestId() + "</td>");
+                    out.print("<td>" + t.getPassengerUsername() + "</td>");
+                    out.print("<td>" + t.getStartNodeName() + "</td>");
+                    out.print("<td>" + t.getDestinationNodeName() + "</td>");
+                    out.print("<td>" + "<a href=\"..\\triprequest\\acceptrequest.jsp?requestId=" + t.getRequestId() + "&action=accept" + "\">" + "<img src=\"../rsc/edit.png\" class=\"w3-round\" alt=\"edit?\" style=\"width: 70%\">" + "</a>" + "</td>");
+                    // out.print("<td>" + "<a href=\".\\driveredit.jsp?username="
+                    // + d.getUserName() + "&action=delete" + "\">" + "<img src=\"../rsc/rubbish-bin.png\" class=\"w3-round\" alt=\"delete?\" style=\"width: 50%\">" + "</a>" + "</td>");
+                    out.print("</tr>");
+                }
+            %>
+        </table>  
+
+        <br/>
         <div>
-            <h2> Driver Trips List</h2>
+            <h2> Driver Trips List History </h2>
             <table class="w3-table-all">
                 <thead>
                     <tr class="w3-pink">
                         <th>ID</th>
                         <th>Passenger Name</th>
-                        <th>Home</th>
-                        <th>Destination</th>
-
+                        <th>From</th>
+                        <th>To</th>
                     </tr>
                 </thead>
                 <%
-                    int i = 1;
+                    int rowNumber = 1;
                     for (db.Trip trip
                             : db.ODBClass.getInstance().readDriversTrips((String) session.getAttribute("username")))
                     {
+                        String startNodeName = (String) db.ODBClass.getInstance().readNode(trip.getStartNodeID()).getName();
+                        String EndNodeName = (String) db.ODBClass.getInstance().readNode(trip.getEndNodeID()).getName();
                         out.print("<tr>");
-                        out.print("<td>" + i + "</td>");
+                        out.print("<td>" + rowNumber++ + "</td>");
                         out.print("<td>" + trip.getPassengerName() + "</td>");
-                        out.print("<td>" + trip.getStartNodeID() + "</td>");
-                        out.print("<td>" + trip.getEndNodeID() + "</td>");
-                       // out.print("<td>" + "<a href=\".\\driveredit.jsp?username=" + d.getUserName() + "&action=edit" + "\">" + "<img src=\"../rsc/edit.png\" class=\"w3-round\" alt=\"edit?\" style=\"width: 70%\">" + "</a>" + "</td>");
+                        out.print("<td>" + startNodeName + "</td>");
+                        out.print("<td>" + EndNodeName + "</td>");
+                        // out.print("<td>" + "<a href=\".\\driveredit.jsp?username=" + d.getUserName() + "&action=edit" + "\">" + "<img src=\"../rsc/edit.png\" class=\"w3-round\" alt=\"edit?\" style=\"width: 70%\">" + "</a>" + "</td>");
                         // out.print("<td>" + "<a href=\".\\driveredit.jsp?username="
                         // + d.getUserName() + "&action=delete" + "\">" + "<img src=\"../rsc/rubbish-bin.png\" class=\"w3-round\" alt=\"delete?\" style=\"width: 50%\">" + "</a>" + "</td>");
                         out.print("</tr>");
-                        i++;
                     }
                 %>
             </table> 
-            
-             <h2> Available Trip Requests </h2>
-            <table class="w3-table-all">
-                <thead>
-                    <tr class="w3-pink">
-                        <th>ID</th>
-                        <th>Passenger Name</th>
-                        <th>Home</th>
-                        <th>Destination</th>
-                       
-                    </tr>
-                </thead>
-                <%
-                    
-                    for (trip.TripRequest t
-                            : trip.TripRequestManager.getTripRequsetManagerInstance().getAllWaitingTripRequests())
-                    {
-                        out.print("<tr>");
-                        out.print("<td>" + t.getRequestId()  + "</td>");
-                        out.print("<td>" + t.getPassengerUsername() + "</td>");
-                        out.print("<td>" + t.getStartNode() + "</td>");
-                        out.print("<td>" + t.getDestinationNode() + "</td>");
-                       // out.print("<td>" + "<a href=\".\\driveredit.jsp?username=" + d.getUserName() + "&action=edit" + "\">" + "<img src=\"../rsc/edit.png\" class=\"w3-round\" alt=\"edit?\" style=\"width: 70%\">" + "</a>" + "</td>");
-                       // out.print("<td>" + "<a href=\".\\driveredit.jsp?username="
-                               // + d.getUserName() + "&action=delete" + "\">" + "<img src=\"../rsc/rubbish-bin.png\" class=\"w3-round\" alt=\"delete?\" style=\"width: 50%\">" + "</a>" + "</td>");
-                        out.print("</tr>");                        
-                    }
-                %>
-            </table>  
 
         </div>
+        <br/>
     </body>
 </html>
 

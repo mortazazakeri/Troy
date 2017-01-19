@@ -63,6 +63,10 @@ public class TripRequest
         this.aliasName = aliasName;
         this.driverUsername = driverUsername;
         this.status = status; //e.g. accept, reject or waiting
+        
+        this.startNodeName = (String)db.ODBClass.getInstance().readNode(startNode).getName();
+        this.destinationNodeName = (String)db.ODBClass.getInstance().readNode(destinationNode).getName();
+        
     }
 
     /**

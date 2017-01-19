@@ -93,16 +93,17 @@ public class TripRequestManager
         return null;
     }
 
-    public TripRequest getTripRequestOfPessenger(String passengerUsername)
+    public List<TripRequest> getTripRequestsOfPessenger(String passengerUsername)
     {
+        LinkedList<TripRequest> passengerTripRequests = new LinkedList<>();
         for (TripRequest tr : tripRequestsList)
         {
             if (tr.getPassengerUsername().equals(passengerUsername))
             {
-                return tripRequestsList.get(tripRequestsList.indexOf(tr));
+                passengerTripRequests.add(tr);
             }
         }
-        return null;
+        return passengerTripRequests;
 
     }
 
