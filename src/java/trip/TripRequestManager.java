@@ -73,6 +73,25 @@ public class TripRequestManager
         }
         return null;
     }
+    
+    public TripRequest updateTripRequestStatusAndDriver(int tripRequestId, String newStatus, String driverName)
+    {
+
+        for (TripRequest tr : tripRequestsList)
+        {
+            if (tr.getRequestId() == tripRequestId)
+            {
+                tripRequestsList.get(tripRequestsList.indexOf(tr)).setStatus(newStatus);
+                tripRequestsList.get(tripRequestsList.indexOf(tr)).setDriverUsername(driverName);
+                if(newStatus.equals("accept"))
+                {
+                    saveTrip2DB(tr);
+                }
+                return tripRequestsList.get(tripRequestsList.indexOf(tr));
+            }
+        }
+        return null;
+    }
 
     public TripRequest getTripRequestOfPessenger(String passengerUsername)
     {
