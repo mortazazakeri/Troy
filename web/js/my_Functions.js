@@ -1,4 +1,4 @@
-function ff1(nn)
+function ff13(nn)
 {
     selectedNodeName = nn ;
     document.getElementById('editForm').style.visibility = "visible";

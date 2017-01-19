@@ -10,6 +10,34 @@ package trip;
 public class TripRequest
 {
 
+    /**
+     * @return the startNodeName
+     */
+    public String getStartNodeName() {
+        return startNodeName;
+    }
+
+    /**
+     * @param startNodeName the startNodeName to set
+     */
+    public void setStartNodeName(String startNodeName) {
+        this.startNodeName = startNodeName;
+    }
+
+    /**
+     * @return the destinationNodeName
+     */
+    public String getDestinationNodeName() {
+        return destinationNodeName;
+    }
+
+    /**
+     * @param destinationNodeName the destinationNodeName to set
+     */
+    public void setDestinationNodeName(String destinationNodeName) {
+        this.destinationNodeName = destinationNodeName;
+    }
+
     private int requestId;
     private int startNode;
     private int destinationNode;
@@ -18,6 +46,9 @@ public class TripRequest
     private String driverUsername;
     private String status; //e.g. accept, reject or waiting
 
+    private String startNodeName;
+    private String destinationNodeName;
+    
     public TripRequest()
     {
 
