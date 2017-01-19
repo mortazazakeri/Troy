@@ -22,15 +22,18 @@
         </style>
         <title>Driver Profile</title>
         <%
-            if (session.getAttribute("status") == null) {
+            if (session.getAttribute("status") == null)
+            {
                 String site = new String("./login.jsp");
                 response.setStatus(response.SC_MOVED_TEMPORARILY);
                 response.setHeader("Location", site);
-            } else if (session.getAttribute("role").equals("driver") == false && session.getAttribute("role").equals("manager") == false) {
+            } else if (session.getAttribute("role").equals("driver") == false && session.getAttribute("role").equals("manager") == false)
+            {
                 String site = new String("../error/permission.jsp");
                 response.setStatus(response.SC_MOVED_TEMPORARILY);
                 response.setHeader("Location", site);
-            } else if (session.getAttribute("username").toString().equals(request.getParameter("username")) == false && session.getAttribute("role").equals("manager") == false) {
+            } else if (session.getAttribute("username").toString().equals(request.getParameter("username")) == false && session.getAttribute("role").equals("manager") == false)
+            {
 
                 String site = new String("../error/permission.jsp");
                 response.setStatus(response.SC_MOVED_TEMPORARILY);
@@ -47,19 +50,23 @@
         </header>
         <%
             db.Driver d = null;
-            if (request.getMethod() == "GET") {
+            if (request.getMethod() == "GET")
+            {
                 d = db.ODBClass.getInstance().readDriver(request.getParameter("username"));
-            } else if (request.getMethod() == "POST") {
+            } else if (request.getMethod() == "POST")
+            {
                 db.Responsibility driverEditor = new Responsibility();
                 boolean b = driverEditor.doDriverEdit(request.getParameter("name"),
                         request.getParameter("username"), request.getParameter("password"),
                         request.getParameter("ln")
                 );
                 d = db.ODBClass.getInstance().readDriver(request.getParameter("username"));
-                if (b == true) {
+                if (b == true)
+                {
                     out.println("<h3>Your profile update uccessfully!</h3>");
 
-                } else {
+                } else
+                {
                     out.print(" Sorry, update was failed. Something is wrong... ");
                 }
             }
@@ -80,7 +87,8 @@
                 </select>
                 <input class="w3-btn w3-round-large w3-center" style="width: 25%; margin-left: 37.5%; margin-top: 10%" type="submit" value="Update">
                 <div class="w3-container w3-center">
-                    <% if (session.getAttribute("role").equals("manager") == true) {
+                    <% if (session.getAttribute("role").equals("manager") == true)
+                        {
                             out.print("<a href=\"./profilemanager.jsp?username=" + session.getAttribute("username") + "\"> Back to Manager Profile  </a> | ");
                         }
                         out.print("<a href=\"./driverdelete.jsp?username=" + d.getUserName() + "\"> Delete Profile </a> | ");
@@ -88,6 +96,68 @@
                     %>
                 </div>
         </form> 
+
+        <div>
+            <h2> Driver Trips List</h2>
+            <table class="w3-table-all">
+                <thead>
+                    <tr class="w3-pink">
+                        <th>ID</th>
+                        <th>Passenger Name</th>
+                        <th>Home</th>
+                        <th>Destination</th>
+
+                    </tr>
+                </thead>
+                <%
+                    int i = 1;
+                    for (db.Trip trip
+                            : db.ODBClass.getInstance().readDriversTrips((String) session.getAttribute("username")))
+                    {
+                        out.print("<tr>");
+                        out.print("<td>" + i + "</td>");
+                        out.print("<td>" + trip.getPassengerName() + "</td>");
+                        out.print("<td>" + trip.getStartNodeID() + "</td>");
+                        out.print("<td>" + trip.getEndNodeID() + "</td>");
+                       // out.print("<td>" + "<a href=\".\\driveredit.jsp?username=" + d.getUserName() + "&action=edit" + "\">" + "<img src=\"../rsc/edit.png\" class=\"w3-round\" alt=\"edit?\" style=\"width: 70%\">" + "</a>" + "</td>");
+                        // out.print("<td>" + "<a href=\".\\driveredit.jsp?username="
+                        // + d.getUserName() + "&action=delete" + "\">" + "<img src=\"../rsc/rubbish-bin.png\" class=\"w3-round\" alt=\"delete?\" style=\"width: 50%\">" + "</a>" + "</td>");
+                        out.print("</tr>");
+                        i++;
+                    }
+                %>
+            </table> 
+            
+             <h2> Available Trip Requests </h2>
+            <table class="w3-table-all">
+                <thead>
+                    <tr class="w3-pink">
+                        <th>ID</th>
+                        <th>Passenger Name</th>
+                        <th>Home</th>
+                        <th>Destination</th>
+                       
+                    </tr>
+                </thead>
+                <%
+                    
+                    for (trip.TripRequest t
+                            : trip.TripRequestManager.getTripRequsetManagerInstance().getAllWaitingTripRequests())
+                    {
+                        out.print("<tr>");
+                        out.print("<td>" + t.getRequestId()  + "</td>");
+                        out.print("<td>" + t.getPassengerUsername() + "</td>");
+                        out.print("<td>" + t.getStartNode() + "</td>");
+                        out.print("<td>" + t.getDestinationNode() + "</td>");
+                       // out.print("<td>" + "<a href=\".\\driveredit.jsp?username=" + d.getUserName() + "&action=edit" + "\">" + "<img src=\"../rsc/edit.png\" class=\"w3-round\" alt=\"edit?\" style=\"width: 70%\">" + "</a>" + "</td>");
+                       // out.print("<td>" + "<a href=\".\\driveredit.jsp?username="
+                               // + d.getUserName() + "&action=delete" + "\">" + "<img src=\"../rsc/rubbish-bin.png\" class=\"w3-round\" alt=\"delete?\" style=\"width: 50%\">" + "</a>" + "</td>");
+                        out.print("</tr>");                        
+                    }
+                %>
+            </table>  
+
+        </div>
     </body>
 </html>
 

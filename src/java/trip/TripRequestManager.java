@@ -18,14 +18,14 @@ public class TripRequestManager
 
     public static int requestIdCounter = 0;
     private LinkedList<TripRequest> tripRequestsList = new LinkedList<>();
-    private TripRequestManager tripRequestManager = null;
+    private static TripRequestManager tripRequestManager = null;
 
     private TripRequestManager()
     {
 
     }
 
-    public TripRequestManager getTripRequsetManagerInstance()
+    public static TripRequestManager getTripRequsetManagerInstance()
     {
         if (tripRequestManager == null)
         {
@@ -47,57 +47,75 @@ public class TripRequestManager
             return false;
         }
     }
-    
+
     public boolean deleteTripRequset(int tripRequestId)
     {
 
-        Predicate<TripRequest> filterByID = tr->tr.getRequestId()== tripRequestId;      
+        Predicate<TripRequest> filterByID = tr -> tr.getRequestId() == tripRequestId;
         return tripRequestsList.removeIf(filterByID);
 
     }
-    
+
     public TripRequest updateTripRequestStatus(int tripRequestId, String newStatus)
     {
-         
-         for(TripRequest tr: tripRequestsList)
-         {
-             if(tr.getRequestId()== tripRequestId)
-             {
-                 tripRequestsList.get(tripRequestsList.indexOf(tr)).setStatus(newStatus);                      
-                 return  tripRequestsList.get(tripRequestsList.indexOf(tr));
-             }
-         }
-         return null;
+
+        for (TripRequest tr : tripRequestsList)
+        {
+            if (tr.getRequestId() == tripRequestId)
+            {
+                tripRequestsList.get(tripRequestsList.indexOf(tr)).setStatus(newStatus);
+                if(newStatus.equals("accept"))
+                {
+                    saveTrip2DB(tr);
+                }
+                return tripRequestsList.get(tripRequestsList.indexOf(tr));
+            }
+        }
+        return null;
     }
-    
-    public TripRequest  getTripRequestOfPessenger(String passengerUsername)
+
+    public TripRequest getTripRequestOfPessenger(String passengerUsername)
     {
-        for(TripRequest tr: tripRequestsList)
-         {
-             if(tr.getPassengerUsername().equals(passengerUsername))
-             {                     
-                 return  tripRequestsList.get(tripRequestsList.indexOf(tr));
-             }
-         }
-         return null;
-        
+        for (TripRequest tr : tripRequestsList)
+        {
+            if (tr.getPassengerUsername().equals(passengerUsername))
+            {
+                return tripRequestsList.get(tripRequestsList.indexOf(tr));
+            }
+        }
+        return null;
+
     }
-    
-    public List<TripRequest>  getAllTripRequests(String passengerUsername)
+
+    public List<TripRequest> getAllTripRequests()
     {
-        return tripRequestsList;        
+        return tripRequestsList;
     }
-    
-    public List<TripRequest>  getAllWaitingTripRequests(String passengerUsername)
+
+    public List<TripRequest> getAllWaitingTripRequests()
     {
         LinkedList<TripRequest> waitingTripRequests = new LinkedList<>();
-        for(TripRequest tr: tripRequestsList)
-         {
-             if(tr.getStatus().equals("waiting"))
-             {                     
-                 waitingTripRequests.add(tr);
-             }
-         }
-        return waitingTripRequests;        
+        for (TripRequest tr : tripRequestsList)
+        {
+            if (tr.getStatus().equals("waiting"))
+            {
+                waitingTripRequests.add(tr);
+            }
+        }
+        return waitingTripRequests;
     }
+
+    public boolean saveTrip2DB(TripRequest tr)
+    {
+        try
+        {
+            db.ODBClass.getInstance().insertTrip(tr.getPassengerUsername(),
+                    tr.getDriverUsername(), tr.getStartNode(), tr.getDestinationNode());
+            return true;
+        } catch (Exception e)
+        {
+            return false;
+        }
+    }
+
 }

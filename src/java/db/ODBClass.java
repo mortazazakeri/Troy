@@ -403,6 +403,30 @@ public class ODBClass
             return null;
         }
     }
+    
+    public List<Trip> readDriversTrips(String driverID)
+    {
+        OSQLSynchQuery<ODocument> query = new OSQLSynchQuery<>(
+                "SELECT FROM " + TRIP + " WHERE driver_id = ?");
+        try
+        {
+            docDB.activateOnCurrentThread();
+            List<ODocument> result = docDB.command(query)
+                    .execute(driverID);
+            List<Trip> trips = new ArrayList<>();
+            result.forEach((document) ->
+            {
+                trips.add(new Trip(document.field("passenger_name"),
+                        document.field("driver_id"),
+                        document.field("start_node_id"),
+                        document.field("end_node_id")));
+            });
+            return trips;
+        } catch (Exception e)
+        {
+            return null;
+        }
+    }
 
     public void insertUser(String name, String userName,
             String password)
