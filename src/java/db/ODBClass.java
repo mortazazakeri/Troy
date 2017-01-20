@@ -390,13 +390,13 @@ public class ODBClass
             List<ODocument> result = docDB.command(query)
                     .execute(passengerName);
             List<Trip> trips = new ArrayList<>();
-            result.forEach((document) ->
+            for(ODocument document : result)
             {
                 trips.add(new Trip(document.field("passenger_name"),
                         document.field("driver_id"),
                         document.field("start_node_id"),
                         document.field("end_node_id")));
-            });
+            }
             return trips;
         } catch (Exception e)
         {

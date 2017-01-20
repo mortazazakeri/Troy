@@ -80,7 +80,7 @@
                     %>
                 <li class="w3-hide-small"><a href="<% out.print(registerOrProfileLink);%>" class="w3-padding-large w3-hover-white"><b> <%out.print(registerOrProfileName);%> </b></a></li>
                 <li class="w3-hide-small"><a href="<% out.print(loginOrLogoutLink);%>" class="w3-padding-large w3-hover-white"><b> <%out.print(loginOrLogoutName);%> </b></a></li>                
-                <li class="w3-hide-small"><a href="#" class="w3-padding-large w3-hover-white"><b> Help and About </b></a></li>
+                <li class="w3-hide-small"><a href="./helpandabout/help.jsp" class="w3-padding-large w3-hover-white"><b> Help and About </b></a></li>
             </ul>
 
             <!-- Navbar on small screens -->
@@ -92,7 +92,7 @@
                     <li><a class="w3-padding-large" href="<% out.print(mapPageDynamicURL);%>"><b> Map </b></a></li>
                     <!--<li><a class="w3-padding-large" href="./map/drivermap.jsp"> <b> Driver Map </b> </a></li>
                     <li><a class="w3-padding-large" href="./map/passengermap.jsp"><b> Passenger Map </b></a></li>-->
-                    <li><a class="w3-padding-large" href=""><b> Help and About </b></a></li>
+                    <li><a class="w3-padding-large" href="./helpandabout/help.jsp"><b> Help and About </b></a></li>
                 </ul>
             </div>
         </div>
@@ -107,7 +107,7 @@
                 }
             %>
         </header>
-
+         
         <!-- Footer -->
         <footer class="w3-container w3-padding-64 w3-center w3-opacity">  
             <div class="w3-xlarge w3-padding-32">

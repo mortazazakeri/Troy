@@ -2,40 +2,40 @@ package db;
 
 public class Trip
 {
-	private final String passengerName;
 
-	private final int driverID;
+    private final String passengerName;
 
-	private final int startNodeID;
+    private final String driverID;
 
-	private final int endNodeID;
+    private final int startNodeID;
 
-	public Trip(String passengerName, int driverID, int startNodeID,
-			int endNodeID)
-	{
-		this.driverID = driverID;
-		this.startNodeID = startNodeID;
-		this.endNodeID = endNodeID;
-		this.passengerName = passengerName;
-	}
+    private final int endNodeID;
 
-	public int getDriverID()
-	{
-		return driverID;
-	}
+    public Trip(String passengerName, String driverID, int startNodeID, int endNodeID)
+    {
+        this.driverID = driverID;
+        this.startNodeID = startNodeID;
+        this.endNodeID = endNodeID;
+        this.passengerName = passengerName;
+    }
 
-	public int getStartNodeID()
-	{
-		return startNodeID;
-	}
+    public String getDriverID()
+    {
+        return driverID;
+    }
 
-	public int getEndNodeID()
-	{
-		return endNodeID;
-	}
+    public int getStartNodeID()
+    {
+        return startNodeID;
+    }
 
-	public String getPassengerName()
-	{
-		return passengerName;
-	}
+    public int getEndNodeID()
+    {
+        return endNodeID;
+    }
+
+    public String getPassengerName()
+    {
+        return passengerName;
+    }
 }

@@ -71,7 +71,7 @@
                 }
             }
         %>
-        <form class="w3-container w3-center" style="margin-top: 5%" action="./driveredit.jsp.jsp" method="post">
+        <form class="w3-container w3-center" style="margin-top: 5%" action="./driveredit.jsp" method="post">
             <div class="w3-container w3-left-align">
                 <label class="w3-label">Name</label>
                 <input class="w3-input w3-center" type="text" name="name" value="<%out.print(d.getName());%>">
@@ -118,7 +118,7 @@
                     out.print("<td>" + t.getPassengerUsername() + "</td>");
                     out.print("<td>" + t.getStartNodeName() + "</td>");
                     out.print("<td>" + t.getDestinationNodeName() + "</td>");
-                    out.print("<td>" + "<a href=\"..\\triprequest\\acceptrequest.jsp?requestId=" + t.getRequestId() + "&action=accept" + "\">" + "<img src=\"../rsc/edit.png\" class=\"w3-round\" alt=\"edit?\" style=\"width: 70%\">" + "</a>" + "</td>");
+                    out.print("<td>" + "<a href=\"..\\triprequest\\acceptrequest.jsp?requestId=" + t.getRequestId() + "&action=accept" + "\">" + "<img src=\"../rsc/edit.png\" class=\"w3-round\" alt=\"edit?\" style=\"width: 20%\">" + "</a>" + "</td>");
                     // out.print("<td>" + "<a href=\".\\driveredit.jsp?username="
                     // + d.getUserName() + "&action=delete" + "\">" + "<img src=\"../rsc/rubbish-bin.png\" class=\"w3-round\" alt=\"delete?\" style=\"width: 50%\">" + "</a>" + "</td>");
                     out.print("</tr>");
@@ -141,10 +141,11 @@
                 <%
                     int rowNumber = 1;
                     for (db.Trip trip
-                            : db.ODBClass.getInstance().readDriversTrips((String) session.getAttribute("username")))
+                            : db.ODBClass.getInstance().readDriversTrips(session.getAttribute("username").toString()))
                     {
                         String startNodeName = (String) db.ODBClass.getInstance().readNode(trip.getStartNodeID()).getName();
                         String EndNodeName = (String) db.ODBClass.getInstance().readNode(trip.getEndNodeID()).getName();
+                        
                         out.print("<tr>");
                         out.print("<td>" + rowNumber++ + "</td>");
                         out.print("<td>" + trip.getPassengerName() + "</td>");
