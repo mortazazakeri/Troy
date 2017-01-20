@@ -118,7 +118,7 @@
 
         <div id="log"></div>
         </div>
-
+        <a href="../index.jsp"> Home </a> 
         
     </body>
 </html>

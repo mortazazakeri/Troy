@@ -73,7 +73,8 @@
         <title>Driver Map</title>
     </head>
     <body onload="init();">
-        
+       
+        <br/>
         <div id="container">
 
         <div id="left-container">
@@ -98,8 +99,9 @@
             
         <div id="log"></div>
         </div>
-        
+        <br/>
         <h2> Available Trip Requests </h2>
+        <br/>
         <table class="w3-table-all">
             <thead>
                 <tr class="w3-pink">
@@ -126,7 +128,9 @@
                 }
             %>
         </table>
-        
+        <br/>
+        <a class="w3-hover-text-light-blue" href="../index.jsp">Home</a>
+        <br/>
     </body>
 </html>
 
