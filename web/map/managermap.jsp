@@ -125,7 +125,7 @@
 
             }
 
-            jsonDataStrings = graphVis.getJsonDataInStringList();
+            jsonDataStrings = graphVis.getJsonDataInStringList(null);
         %>
         <!-- Mohsen JavaScript Codes -->
         <script language="javascript" type="text/javascript">

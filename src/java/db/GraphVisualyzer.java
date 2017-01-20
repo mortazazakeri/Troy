@@ -41,7 +41,7 @@ public class GraphVisualyzer
      * Create a list of strings, Strings are in Json format
      * @return the list
      */
-    public List<String> getJsonDataInStringList()
+    public List<String> getJsonDataInStringList(List<String> cheapestPath)
     {
         reNewData();
         JSONObject jsonObj = new JSONObject();
@@ -71,10 +71,32 @@ public class GraphVisualyzer
         {
             jsonObj.clear();
             Adjacencies.clear();
-            Adjacencies.add(edge.getDestinationNodeName());
-            jsonObj.accumulate("adjacencies", Adjacencies);
-
             nodeData.clear();
+            boolean ColorChanged = false;
+            
+            if (cheapestPath != null)
+            {
+                for (int i = 0; i < cheapestPath.size()-1 ; i++) 
+                {
+                    if ( (cheapestPath.get(i).equals(edge.getStartNodeName()) &&
+                          cheapestPath.get(i+1).equals(edge.getDestinationNodeName())) ||
+                         (cheapestPath.get(i).equals(edge.getDestinationNodeName()) &&
+                          cheapestPath.get(i+1).equals(edge.getStartNodeName()))) 
+                    {
+                        jsonObj.put("adjacencies",
+                        "[{\"nodeTo\":\""+edge.getDestinationNodeName()+"\",\"nodeFrom\":\""+edge.getStartNodeName()+"\",\"data\":{\"$dim\":20,\"$color\":\"#ffff00\"}}]");
+                        ColorChanged = true;
+                        break;
+                    }
+                }
+            }
+            
+            if (!ColorChanged) 
+            {
+                Adjacencies.add(edge.getDestinationNodeName());
+                jsonObj.accumulate("adjacencies", Adjacencies);
+            }
+            
             nodeData.put("$color", "#C74243");
             nodeData.put("$type", "circle");
             nodeData.put("$dim", 10);

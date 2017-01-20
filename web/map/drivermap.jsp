@@ -36,7 +36,7 @@
     GraphVisualyzer graphVis = new GraphVisualyzer();
     List<String> jsonDataStrings = new ArrayList<String>();
     String messageString = "";
-    jsonDataStrings = graphVis.getJsonDataInStringList();
+    jsonDataStrings = graphVis.getJsonDataInStringList(ODBClass.getInstance().getCheapestPath(67, 66));
     
 %>
 
@@ -69,10 +69,22 @@
 
             </form>
         </div>
-
+            
         <div id="log"></div>
         </div>
-
+        <div>
+            <%
+                List<String> cheapestPath = ODBClass.getInstance().getCheapestPath(67, 66);
+                String el;
+                int i6 = 0;
+                for (String ss : cheapestPath) {
+                    el = "<label  id=\"lbl" + i6 + "\"" + " name=\"checkbox\" value=\"" + ss+ "\">" + ss
+                            + " - </label>";
+                    out.print(el);
+                    i6++;
+                }
+            %>
+        </div>
         
     </body>
 </html>
@@ -91,4 +103,6 @@
         DrawGraph();
         document.getElementById('messageLabel').innerHTML = "<%=messageString%>";
     }
+    
+    
 </script>

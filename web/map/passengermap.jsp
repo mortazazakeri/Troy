@@ -68,7 +68,7 @@
         }
     }
     
-    jsonDataStrings = graphVis.getJsonDataInStringList();
+    jsonDataStrings = graphVis.getJsonDataInStringList(null);
     
 %>
 
