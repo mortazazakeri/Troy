@@ -169,6 +169,16 @@
             <input type="hidden" name="edgeIdr1" value="<%=edgeIdr1%>">
             <input type="hidden" name="edgeIdr2" value="<%=edgeIdr2%>">
         </form>
+        
+        <form class="w3-container w3-center" style="width: 50%;margin-left: 25%; margin-top: 5%" method="POST" action="./deleteNode_Edge.jsp">
+            <input type="hidden" name="FormRecognizer" value="deleteEdgeForm">
+            <input type="hidden" name="deleteStartNodeName" value="<%=startNodeName%>">
+            <input type="hidden" name="deleteEndNodeName" value="<%=endNodeName%>">
+            <input type="hidden" name="deleteEdgeIdr1" value="<%=edgeIdr1%>">
+            <input type="hidden" name="deleteEdgeIdr2" value="<%=edgeIdr2%>">
+            <input class="w3-btn w3-blue w3-center" style="margin-top: 5%" type="submit" value="Delete Edge">
+        </form>
+        
         <div class="w3-panel w3-white">
             <h3 id="msgHeader" style="visibility: hidden">Attention!</h3>
             <label class="w3-label" id="messageLabel" style="visibility: hidden"></label>

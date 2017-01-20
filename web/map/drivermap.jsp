@@ -32,11 +32,26 @@
 <script language="javascript" type="text/javascript" src="../js/my_Functions.js"></script>
 
 <%
-
+    
+    int tripEndNodeID = -1;
+    int tripStartNodeID = -1;
+    try {
+            String ss = request.getParameter("start");
+            tripStartNodeID = Integer.parseInt(request.getParameter("start"));
+            tripEndNodeID = Integer.parseInt(request.getParameter("end"));
+        } catch (Exception e) 
+        {
+            
+        }
+    
     GraphVisualyzer graphVis = new GraphVisualyzer();
     List<String> jsonDataStrings = new ArrayList<String>();
     String messageString = "";
-    jsonDataStrings = graphVis.getJsonDataInStringList(ODBClass.getInstance().getCheapestPath(67, 66));
+    
+    if (tripStartNodeID <=0 || tripEndNodeID <=0 ) 
+        jsonDataStrings = graphVis.getJsonDataInStringList(null);
+    else
+        jsonDataStrings = graphVis.getJsonDataInStringList(ODBClass.getInstance().getCheapestPath(tripStartNodeID, tripEndNodeID));
     
 %>
 
@@ -44,6 +59,17 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+            body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
+            .w3-navbar,h1,button {font-family: "Montserrat", sans-serif}
+            .fa-anchor,.fa-coffee {font-size:200px}
+        </style>
+        
         <title>Driver Map</title>
     </head>
     <body onload="init();">
@@ -72,19 +98,34 @@
             
         <div id="log"></div>
         </div>
-        <div>
+        
+        <h2> Available Trip Requests </h2>
+        <table class="w3-table-all">
+            <thead>
+                <tr class="w3-pink">
+                    <th>ID</th>
+                    <th>Passenger Name</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Accept</th
+                </tr>
+            </thead>
             <%
-                List<String> cheapestPath = ODBClass.getInstance().getCheapestPath(67, 66);
-                String el;
-                int i6 = 0;
-                for (String ss : cheapestPath) {
-                    el = "<label  id=\"lbl" + i6 + "\"" + " name=\"checkbox\" value=\"" + ss+ "\">" + ss
-                            + " - </label>";
-                    out.print(el);
-                    i6++;
+                for (trip.TripRequest t
+                        : trip.TripRequestManager.getTripRequsetManagerInstance().getAllWaitingTripRequests())
+                {
+                    out.print("<tr>");
+                    out.print("<td>" + t.getRequestId() + "</td>");
+                    out.print("<td>" + t.getPassengerUsername() + "</td>");
+                    out.print("<td>" + t.getStartNodeName() + "</td>");
+                    out.print("<td>" + t.getDestinationNodeName() + "</td>");
+                    out.print("<td>" + "<a href=\"..\\triprequest\\acceptrequest.jsp?requestId=" + t.getRequestId() + "&action=accept" + "\">" + "<img src=\"../rsc/edit.png\" class=\"w3-round\" alt=\"edit?\" style=\"width: 20%\">" + "</a>" + "</td>");
+                    // out.print("<td>" + "<a href=\".\\driveredit.jsp?username="
+                    // + d.getUserName() + "&action=delete" + "\">" + "<img src=\"../rsc/rubbish-bin.png\" class=\"w3-round\" alt=\"delete?\" style=\"width: 50%\">" + "</a>" + "</td>");
+                    out.print("</tr>");
                 }
             %>
-        </div>
+        </table>
         
     </body>
 </html>

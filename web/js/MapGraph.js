@@ -188,10 +188,10 @@ function DrawGraph(){
     iter: 40,
     property: 'end',
     onStep: function(perc){
-      Log.write(perc + '% loaded...');
+      //Log.write(perc + '% loaded...');
     },
     onComplete: function(){
-      Log.write('done');
+      //Log.write('done');
       fd.animate({
         modes: ['linear'],
         transition: $jit.Trans.Elastic.easeOut,

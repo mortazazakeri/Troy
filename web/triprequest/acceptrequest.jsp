@@ -35,8 +35,10 @@
             int tripRequestId = Integer.parseInt(request.getParameter("requestId").toString());
             trip.TripRequestManager.getTripRequsetManagerInstance().
                     updateTripRequestStatusAndDriver(tripRequestId, "accept", session.getAttribute("username").toString());
-
-            String site = new String("../user/driveredit.jsp?username="+session.getAttribute("username").toString());
+                        
+            trip.TripRequest tr = trip.TripRequestManager.getTripRequsetManagerInstance().getTripRequestById(tripRequestId);
+                      
+            String site = new String("../map/drivermap.jsp?start=" + tr.getStartNode() + "&end=" +  tr.getDestinationNode());
             response.setStatus(response.SC_MOVED_TEMPORARILY);
             response.setHeader("Location", site);
         %>

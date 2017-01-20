@@ -142,6 +142,13 @@
             <br>
             <input class="w3-btn w3-blue w3-center" style="margin-top: 5%" type="submit" value="Save Changes">
         </form>
+            
+        <form class="w3-container w3-center" style="width: 50%;margin-left: 25%; margin-top: 5%" method="POST" action="./deleteNode_Edge.jsp">
+            <input class="w3-input w3-center" type="hidden" name="FormRecognizer" value="deleteNodeForm">
+            <input class="w3-input w3-center" type="hidden" id="deleteNodeidr" name="deleteNodeidr" value="<%=nodeIdr%>">
+            <input class="w3-input w3-center" type="hidden" id="deleteNodeName" name="deleteNodeName" value="<%=nodeName%>">
+            <input class="w3-btn w3-blue w3-center" style="margin-top: 5%" type="submit" value="Delete Node">
+        </form>
         <label class="w3-light-blue" style="color: red" id="messageLabel"></label>
         <br>
         <a class="w3-hover-text-light-blue w3-center" href="./managermap.jsp">Back to Map</a> <br>

@@ -92,6 +92,19 @@ public class TripRequestManager
         }
         return null;
     }
+    
+    public TripRequest getTripRequestById(int id)
+    {
+         for (TripRequest tr : tripRequestsList)
+        {
+            if (tr.getRequestId() == id)
+            {
+                return tripRequestsList.get(tripRequestsList.indexOf(tr));
+            }
+        }
+        return null;
+    }
+    
 
     public List<TripRequest> getTripRequestsOfPessenger(String passengerUsername)
     {
