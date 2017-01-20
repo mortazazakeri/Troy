@@ -78,23 +78,80 @@
         <div id="container">
 
         <div id="left-container">
-                <div id="id-list"></div>
+            <div id="id-list"></div>
+            <%
+                String driverUserName = request.getParameter("username");
+                List<Node> nodesList = ODBClass.getInstance().readAllNodes();
+                
+                // update node location
+                if (request.getMethod().equals("POST")&& request.getParameter("FormRecognizer").equals("changeLocationForm")) 
+                {
+                    String locationNodeName = request.getParameter("nodeName");
+                    for (Node node : nodesList) 
+                    {
+                        
+                        List<String> userNames = node.getDriversIDs();
+                        if (node.getName().equals(locationNodeName)) 
+                        {
+                            if (!userNames.contains(driverUserName)) 
+                            {
+                                userNames.add(driverUserName);
+                                ODBClass.getInstance().updateNode(node.getIdr(), node.getName()
+                                    , node.getLatitude(), node.getLangtitude(), userNames);
+                            }
+                        }
+                        else if (userNames.contains(driverUserName))
+                        {
+                            userNames.remove(driverUserName);
+                            ODBClass.getInstance().updateNode(node.getIdr(), node.getName()
+                                , node.getLatitude(), node.getLangtitude(), userNames);
+                        }
+                    }
+                }
+                
+                
+                //show drivers location top of the page
+                for (Node node : nodesList) 
+                {
+                    try 
+                    {
+                        List<String> userNames = node.getDriversIDs();
+                        if (userNames != null && userNames.size() != 0) 
+                        {
+                            for (String username : userNames) 
+                            {
+                                if(username.equals(driverUserName))  
+                                {
+                                    out.print("Your Location: " + node.getName());
+                                }    
+                            }
+                        }
+                    } 
+                    catch (Exception e) 
+                    {
+                        
+                    }
+                }
+            %>
+            
+            <br>
+            <form class="w3-container" action="./drivermap.jsp" method="post" id="changeLocationForm">
+
+                <input class="w3-input w3-center" type="text" name="nodeName" id="nodeName">
+                <input type="hidden" name="FormRecognizer" value="changeLocationForm"> 
+                <input type="hidden" name="username" value="<%=driverUserName%>">
+                <input class="w3-input w3-btn w3-margin-top w3-center" type="submit" value="Set Location">
+
+            </form>
         </div>
 
         <div id="center-container">
             <div id="infovis"></div>  
+            
         </div>
 
         <div id="right-container">
             <div id="inner-details"></div>
-            <form class="w3-container" action="./editNode.jsp" method="post" id="editForm" style="visibility: hidden">
-
-                <label class="w3-label">Node Name</label>
-                <input class="w3-input w3-center" type="text" name="editNodeName" id="editNodeName" readonly>
-                <input type="hidden" name="FormRecognizer" value="editForm">   
-                <input class="w3-input w3-btn w3-margin-top w3-center" type="submit" value="Edit Node">
-
-            </form>
         </div>
             
         <div id="log"></div>

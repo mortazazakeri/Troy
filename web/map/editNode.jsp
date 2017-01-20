@@ -68,6 +68,35 @@
                                 newLatitude, newLangtitude, newDriverUsernames);
                         messageString = "Node updated!";
                         nodeName = newNodeName;
+                        
+                        // delete this node drivers from another nodes
+                        if (newDriverUsernames.size() != 0) 
+                        {
+                            for (Node node : nodesList) 
+                            {
+                                if (node.getIdr() != Integer.parseInt(newNodeIDr)) 
+                                {
+                                    try 
+                                    {
+                                        List<String> userNames = node.getDriversIDs();
+                                        if (userNames != null && userNames.size() != 0) 
+                                        {
+                                            for (String username : newDriverUsernames) 
+                                            {
+                                                userNames.remove(username);      
+                                            }
+                                        }
+                                        ODBClass.getInstance().updateNode(node.getIdr(), node.getName()
+                                            , node.getLatitude(), node.getLangtitude(), userNames);
+                                    } 
+                                    catch (Exception e) 
+                                    {
+                                        
+                                    }
+                                }
+                            }
+                        }
+                        
                     }
                 }
             }

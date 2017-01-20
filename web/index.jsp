@@ -55,7 +55,7 @@
                     {
                         registerOrProfileLink = new String("./user/driveredit.jsp?username="
                                 + session.getAttribute("username"));
-                        mapPageDynamicURL = new String("./map/drivermap.jsp");
+                        mapPageDynamicURL = new String("./map/drivermap.jsp?username=" + session.getAttribute("username"));
                     } else if (session.getAttribute("role").toString().equals("passenger"))
                     {
                         registerOrProfileLink = new String("./user/passengeredit.jsp?username="
